@@ -110,7 +110,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "inventory.api.ts"
+      "output": "..\\..\\..\\..\\..\\front-end\\angular\\inventory\\src\\api\\inventory.api.ts"
     }
   }
 }
