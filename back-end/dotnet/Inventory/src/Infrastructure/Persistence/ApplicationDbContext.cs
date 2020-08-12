@@ -30,9 +30,18 @@ namespace Inventory.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<ImageItem> ImageItem { get; set; }
+        public DbSet<ImageTranslation> ImageTranslations { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemTranslation> ItemTranslations { get; set; }
+        public DbSet<ItemType> ItemTypes { get; set; }
+        public DbSet<ItemTypeTranslation> ItemTypeTranslations { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<RelatedItem> RelatedItems { get; set; }
 
         public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<TodoList> TodoLists { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

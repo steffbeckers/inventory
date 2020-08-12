@@ -4,14 +4,16 @@ using Inventory.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Inventory.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200812215158_InitialModelsAdded")]
+    partial class InitialModelsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,7 +131,6 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("URL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -207,7 +208,7 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ItemTypeId")
+                    b.Property<Guid?>("ItemTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastModified")
@@ -670,9 +671,7 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Inventory.Domain.Entities.ItemType", "ItemType")
                         .WithMany("Items")
-                        .HasForeignKey("ItemTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemTypeId");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Entities.ItemTranslation", b =>
@@ -714,9 +713,9 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Inventory.Domain.Entities.Item", "Related")
-                        .WithMany("RelatedItems")
+                        .WithMany()
                         .HasForeignKey("RelatedId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

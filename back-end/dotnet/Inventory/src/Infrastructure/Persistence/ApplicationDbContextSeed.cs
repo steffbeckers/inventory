@@ -1,6 +1,7 @@
 ﻿using Inventory.Domain.Entities;
 using Inventory.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,6 +39,58 @@ namespace Inventory.Infrastructure.Persistence
                         new TodoItem { Title = "Water" }
                     }
                 });
+
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.ItemTypes.Any())
+            {
+                context.ItemTypes.AddRange(
+                    new ItemType
+                    {
+                        Name = "Food"
+                    },
+                    new ItemType
+                    {
+                        Name = "Electronics"
+                    },
+                    new ItemType
+                    {
+                        Name = "Invoice"
+                    }
+                );
+
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Languages.Any())
+            {
+                context.Languages.AddRange(
+                    new Language
+                    {
+                        Name = "Dutch",
+                        NativeName = "Nederlands",
+                        Code = "nl"
+                    },
+                    new Language
+                    {
+                        Name = "English",
+                        NativeName = "English",
+                        Code = "en"
+                    },
+                    new Language
+                    {
+                        Name = "French",
+                        NativeName = "français",
+                        Code = "fr"
+                    },
+                    new Language
+                    {
+                        Name = "German",
+                        NativeName = "Deutsch",
+                        Code = "de"
+                    }
+                );
 
                 await context.SaveChangesAsync();
             }
