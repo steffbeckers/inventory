@@ -39,6 +39,8 @@ namespace Inventory.API
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
 
+            services.AddCors();
+
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilter()));
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
@@ -84,6 +86,12 @@ namespace Inventory.API
             });
 
             app.UseRouting();
+
+            app.UseCors(options =>
+                options.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            );
 
             app.UseAuthentication();
 

@@ -24,15 +24,12 @@ namespace Inventory.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public async Task ShouldRequireUniqueTitle()
         {
-            await SendAsync(new CreateTodoListCommand
-            {
-                Title = "Shopping"
-            });
-
             var command = new CreateTodoListCommand
             {
                 Title = "Shopping"
             };
+
+            await SendAsync(command);
 
             FluentActions.Invoking(() =>
                 SendAsync(command)).Should().Throw<ValidationException>();
