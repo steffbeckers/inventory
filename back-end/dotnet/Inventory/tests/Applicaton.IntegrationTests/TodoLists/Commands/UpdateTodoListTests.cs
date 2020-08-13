@@ -1,8 +1,8 @@
-﻿using Inventory.Application.Common.Exceptions;
+﻿using FluentAssertions;
+using Inventory.Application.Common.Exceptions;
 using Inventory.Application.TodoLists.Commands.CreateTodoList;
 using Inventory.Application.TodoLists.Commands.UpdateTodoList;
 using Inventory.Domain.Entities;
-using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;

@@ -1,7 +1,6 @@
 ﻿using Inventory.Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Inventory.Domain.Entities
 {
@@ -10,7 +9,6 @@ namespace Inventory.Domain.Entities
         public Item()
         {
             Images = new List<ImageItem>();
-            RelatedItems = new List<RelatedItem>();
             Translations = new List<ItemTranslation>();
         }
 
@@ -25,7 +23,6 @@ namespace Inventory.Domain.Entities
         public ItemType ItemType { get; set; }
 
         public ICollection<ImageItem> Images { get; set; }
-        public ICollection<RelatedItem> RelatedItems { get; set; }
         public ICollection<ItemTranslation> Translations { get; set; }
     }
 }

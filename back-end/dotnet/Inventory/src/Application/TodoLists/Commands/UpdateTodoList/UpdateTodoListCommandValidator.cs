@@ -1,5 +1,5 @@
-﻿using Inventory.Application.Common.Interfaces;
-using FluentValidation;
+﻿using FluentValidation;
+using Inventory.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;

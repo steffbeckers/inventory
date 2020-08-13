@@ -1,7 +1,4 @@
-﻿using Inventory.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Inventory.Domain.Entities
 {

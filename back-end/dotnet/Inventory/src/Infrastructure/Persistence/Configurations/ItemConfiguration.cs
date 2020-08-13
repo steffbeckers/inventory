@@ -14,11 +14,6 @@ namespace Inventory.Infrastructure.Persistence.Configurations
 
             builder.Property(t => t.Description)
                 .HasMaxLength(500);
-
-            builder.HasMany(t => t.RelatedItems)
-                .WithOne(t => t.Related)
-                .HasForeignKey(t => t.RelatedId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Inventory.Domain.Exceptions;
+﻿using FluentAssertions;
+using Inventory.Domain.Exceptions;
 using Inventory.Domain.ValueObjects;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace Inventory.Domain.UnitTests.ValueObjects

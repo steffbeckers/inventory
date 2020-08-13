@@ -1,7 +1,7 @@
-﻿using Inventory.Application.Common.Interfaces;
+﻿using Inventory.API;
+using Inventory.Application.Common.Interfaces;
 using Inventory.Infrastructure.Identity;
 using Inventory.Infrastructure.Persistence;
-using Inventory.API;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 [SetUpFixture]
 public class Testing
-{   
+{
     private static IConfigurationRoot _configuration;
     private static IServiceScopeFactory _scopeFactory;
     private static Checkpoint _checkpoint;
@@ -57,10 +57,10 @@ public class Testing
             Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
 
         _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
-        
+
         _checkpoint = new Checkpoint
         {
-            TablesToIgnore = new [] { "__EFMigrationsHistory" }
+            TablesToIgnore = new[] { "__EFMigrationsHistory" }
         };
 
         EnsureDatabase();
