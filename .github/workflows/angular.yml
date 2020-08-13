@@ -1,0 +1,30 @@
+name: Angular
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: Install dependencies
+        run: npm install
+        working-directory: front-end/angular/inventory
+      - name: Linting code
+        run: npm run lint
+        working-directory: front-end/angular/inventory
+      - name: Build
+        run: npm run build
+        working-directory: front-end/angular/inventory
+    # TODO: This keeps on running in GitHub action
+    # - name: Test
+    #   run: npm test
+    #   working-directory: front-end/angular/inventory
