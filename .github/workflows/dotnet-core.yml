@@ -2,25 +2,24 @@ name: .NET Core
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    - name: Install dependencies
-      run: dotnet restore back-end/dotnet/Inventory/Inventory.sln
-    - name: Build
-      run: dotnet build --configuration Release --no-restore back-end/dotnet/Inventory/Inventory.sln
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Install dependencies
+        run: dotnet restore back-end/dotnet/Inventory/Inventory.sln
+      - name: Build
+        run: dotnet build --configuration Release --no-restore back-end/dotnet/Inventory/Inventory.sln
     # TODO: Tests need available MS SQL Server connection
     # - name: Test
     #   run: dotnet test --no-restore --verbosity normal back-end/dotnet/Inventory/Inventory.sln
