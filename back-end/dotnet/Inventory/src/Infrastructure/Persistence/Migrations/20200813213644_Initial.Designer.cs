@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200813211732_Initial")]
+    [Migration("20200813213644_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -337,6 +337,27 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Entities.RelatedItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RelatedId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("RelatedId");
+
+                    b.ToTable("RelatedItems");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Entities.TodoItem", b =>
@@ -682,6 +703,19 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                     b.HasOne("Inventory.Domain.Entities.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Entities.RelatedItem", b =>
+                {
+                    b.HasOne("Inventory.Domain.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId");
+
+                    b.HasOne("Inventory.Domain.Entities.Item", "Related")
+                        .WithMany("RelatedItems")
+                        .HasForeignKey("RelatedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

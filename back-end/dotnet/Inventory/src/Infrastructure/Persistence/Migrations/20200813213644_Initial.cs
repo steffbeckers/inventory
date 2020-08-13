@@ -413,6 +413,31 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RelatedItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ItemId = table.Column<Guid>(nullable: true),
+                    RelatedId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RelatedItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RelatedItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RelatedItems_Items_RelatedId",
+                        column: x => x.RelatedId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -514,6 +539,16 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 columns: new[] { "SubjectId", "ClientId", "Type" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_RelatedItems_ItemId",
+                table: "RelatedItems",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RelatedItems_RelatedId",
+                table: "RelatedItems",
+                column: "RelatedId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TodoItems_ListId",
                 table: "TodoItems",
                 column: "ListId");
@@ -555,6 +590,9 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "RelatedItems");
+
+            migrationBuilder.DropTable(
                 name: "TodoItems");
 
             migrationBuilder.DropTable(
@@ -567,10 +605,10 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 name: "Image");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "Languages");
 
             migrationBuilder.DropTable(
-                name: "Languages");
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "TodoLists");

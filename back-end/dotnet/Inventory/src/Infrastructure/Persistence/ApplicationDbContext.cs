@@ -38,6 +38,7 @@ namespace Inventory.Infrastructure.Persistence
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<ItemTypeTranslation> ItemTypeTranslations { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<RelatedItem> RelatedItems { get; set; }
 
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
