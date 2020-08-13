@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Inventory.Application.Common.Behaviours;
 using FluentValidation;
+using Inventory.Application.Common.Behaviours;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

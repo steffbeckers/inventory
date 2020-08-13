@@ -1,0 +1,5 @@
+﻿Add-Migration
+dotnet ef migrations add ItemRelatedItems --project src\Infrastructure --startup-project src\API --output-dir Persistence\Migrations
+
+Remove-Migration
+dotnet ef migrations remove --project src\Infrastructure --startup-project src\API

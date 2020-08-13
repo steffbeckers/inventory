@@ -1,7 +1,7 @@
-﻿using Inventory.Application.Common.Interfaces;
+﻿using CsvHelper;
+using Inventory.Application.Common.Interfaces;
 using Inventory.Application.TodoLists.Queries.ExportTodos;
 using Inventory.Infrastructure.Files.Maps;
-using CsvHelper;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;

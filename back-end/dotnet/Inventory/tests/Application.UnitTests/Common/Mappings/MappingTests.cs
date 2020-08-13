@@ -27,7 +27,7 @@ namespace Inventory.Application.UnitTests.Common.Mappings
         {
             _configuration.AssertConfigurationIsValid();
         }
-        
+
         [Test]
         [TestCase(typeof(TodoList), typeof(TodoListDto))]
         [TestCase(typeof(TodoItem), typeof(TodoItemDto))]

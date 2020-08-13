@@ -1,8 +1,8 @@
-﻿using Inventory.Application.Common.Interfaces;
+﻿using IdentityServer4.EntityFramework.Options;
+using Inventory.Application.Common.Interfaces;
 using Inventory.Domain.Common;
 using Inventory.Domain.Entities;
 using Inventory.Infrastructure.Identity;
-using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -30,9 +30,18 @@ namespace Inventory.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<ImageItem> ImageItem { get; set; }
+        public DbSet<ImageTranslation> ImageTranslations { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemTranslation> ItemTranslations { get; set; }
+        public DbSet<ItemType> ItemTypes { get; set; }
+        public DbSet<ItemTypeTranslation> ItemTypeTranslations { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<RelatedItem> RelatedItems { get; set; }
 
         public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<TodoList> TodoLists { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

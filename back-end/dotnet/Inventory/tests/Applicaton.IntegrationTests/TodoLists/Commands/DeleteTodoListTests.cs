@@ -1,8 +1,8 @@
-﻿using Inventory.Application.Common.Exceptions;
+﻿using FluentAssertions;
+using Inventory.Application.Common.Exceptions;
 using Inventory.Application.TodoLists.Commands.CreateTodoList;
 using Inventory.Application.TodoLists.Commands.DeleteTodoList;
 using Inventory.Domain.Entities;
-using FluentAssertions;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -29,9 +29,9 @@ namespace Inventory.Application.IntegrationTests.TodoLists.Commands
                 Title = "New List"
             });
 
-            await SendAsync(new DeleteTodoListCommand 
-            { 
-                Id = listId 
+            await SendAsync(new DeleteTodoListCommand
+            {
+                Id = listId
             });
 
             var list = await FindAsync<TodoList>(listId);

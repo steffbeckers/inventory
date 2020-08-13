@@ -1,12 +1,12 @@
-﻿using Inventory.Application.Common.Exceptions;
+﻿using FluentAssertions;
+using Inventory.Application.Common.Exceptions;
 using Inventory.Application.TodoItems.Commands.CreateTodoItem;
 using Inventory.Application.TodoItems.Commands.UpdateTodoItem;
 using Inventory.Application.TodoLists.Commands.CreateTodoList;
 using Inventory.Domain.Entities;
-using FluentAssertions;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace Inventory.Application.IntegrationTests.TodoItems.Commands
 {

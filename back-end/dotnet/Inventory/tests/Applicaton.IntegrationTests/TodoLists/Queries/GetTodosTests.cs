@@ -1,6 +1,6 @@
-﻿using Inventory.Application.TodoLists.Queries.GetTodos;
+﻿using FluentAssertions;
+using Inventory.Application.TodoLists.Queries.GetTodos;
 using Inventory.Domain.Entities;
-using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
