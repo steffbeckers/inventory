@@ -343,7 +343,7 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ItemId")
+                    b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RelatedId")
@@ -709,7 +709,9 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Inventory.Domain.Entities.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Inventory.Domain.Entities.Item", "Related")
                         .WithMany("RelatedItems")

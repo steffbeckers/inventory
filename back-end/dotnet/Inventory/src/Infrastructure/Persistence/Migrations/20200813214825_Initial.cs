@@ -418,7 +418,7 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ItemId = table.Column<Guid>(nullable: true),
+                    ItemId = table.Column<Guid>(nullable: false),
                     RelatedId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -428,8 +428,7 @@ namespace Inventory.Infrastructure.Persistence.Migrations
                         name: "FK_RelatedItems_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RelatedItems_Items_RelatedId",
                         column: x => x.RelatedId,
