@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Inventory.API</RootNamespace>
     <AssemblyName>Inventory.API</AssemblyName>
+    <UserSecretsId>31dcfdce-12c4-4c30-8271-51d79869e374</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.7.0" />
     <PackageReference Include="NSwag.MSBuild" Version="13.7.0">
       <PrivateAssets>all</PrivateAssets>
