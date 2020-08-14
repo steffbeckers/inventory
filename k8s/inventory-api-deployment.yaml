@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-api
+  namespace: inventory
+  labels:
+    app: inventory-api
+    release: inventory-api
+spec:
+  selector:
+    matchLabels:
+      app: inventory-api
+      release: inventory-api
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: inventory-api
+        release: inventory-api
+        tier: backend
+    spec:
+      imagePullSecrets:
+        - name: dockerconfig
+      containers:
+        - image: docker.pkg.github.com/steffbeckers/inventory/dotnet-api
+          name: inventory-api
+          ports:
+            - containerPort: 80
+              name: inventory-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-api
+  namespace: inventory
+  labels:
+    app: inventory-api
+    release: inventory-api
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: inventory-api
+    release: inventory-api
+    tier: backend
