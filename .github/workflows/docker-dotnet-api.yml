@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build dotnet-api image
-        run: docker build back-end/dotnet/Inventory --file Dockerfile --tag $IMAGE_NAME
+        run: docker build -t $IMAGE_NAME ./back-end/dotnet/Inventory/
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
