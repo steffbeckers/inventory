@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-mssql
+  namespace: inventory
+spec:
+  type: ExternalName
+  externalName: mssql-mssql-linux.mssql.svc.cluster.local
