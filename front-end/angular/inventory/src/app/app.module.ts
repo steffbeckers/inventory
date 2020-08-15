@@ -7,10 +7,19 @@ import { AppComponent } from './app.component';
 
 import { API_BASE_URL } from 'src/api/inventory.api';
 import { environment } from 'src/environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+  ],
   providers: [
     {
       provide: API_BASE_URL,
