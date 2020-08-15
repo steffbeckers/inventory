@@ -5,15 +5,12 @@ import { Observable } from 'rxjs';
 import { AuthEffects } from './auth.effects';
 
 describe('AuthEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = new Observable<any>();
   let effects: AuthEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AuthEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [AuthEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.inject(AuthEffects);

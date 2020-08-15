@@ -4,20 +4,17 @@ import * as AuthActions from '../actions/auth.actions';
 export const authFeatureKey = 'auth';
 
 export interface State {
-
+  user: any;
 }
 
 export const initialState: State = {
-
+  user: null,
 };
-
 
 export const reducer = createReducer(
   initialState,
 
-  on(AuthActions.loadAuths, state => state),
+  on(AuthActions.loadAuths, (state) => state),
   on(AuthActions.loadAuthsSuccess, (state, action) => state),
-  on(AuthActions.loadAuthsFailure, (state, action) => state),
-
+  on(AuthActions.loadAuthsFailure, (state, action) => state)
 );
-
