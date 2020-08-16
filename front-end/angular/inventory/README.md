@@ -15,6 +15,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 This app
 `ng new inventory`
 
+Clarity design
+`npm install @clr/ui`
+`ng add @clr/angular`
+
 NgRx store
 https://ngrx.io/guide/schematics
 `npm install @ngrx/schematics @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools`
@@ -25,6 +29,7 @@ Auth module
 `ng generate module auth --route auth --module app.module.ts`
 `ng generate @ngrx/schematics:feature auth/store/Auth --module auth/auth.module.ts --group --creators --api`
 `ng generate @ngrx/schematics:action auth/store/Login --group --creators --api`
+`ng generate component auth/Login --module auth/auth.module.ts`
 
 ## Build
 
