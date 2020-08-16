@@ -5,8 +5,8 @@
     <RootNamespace>Inventory.API</RootNamespace>
     <AssemblyName>Inventory.API</AssemblyName>
     <UserSecretsId>31dcfdce-12c4-4c30-8271-51d79869e374</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
+    <!--<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>-->
   </PropertyGroup>
 
   <ItemGroup>

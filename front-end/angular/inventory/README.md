@@ -10,6 +10,22 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+### Used commands for scaffolding
+
+This app
+`ng new inventory`
+
+NgRx store
+https://ngrx.io/guide/schematics
+`npm install @ngrx/schematics @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools`
+`ng generate @ngrx/schematics:store State --root --statePath store --module app.module.ts`
+`ng generate @ngrx/schematics:effect store/App --root --module app.module.ts --group --creators --api`
+
+Auth module
+`ng generate module auth --route auth --module app.module.ts`
+`ng generate @ngrx/schematics:feature auth/store/Auth --module auth/auth.module.ts --group --creators --api`
+`ng generate @ngrx/schematics:action auth/store/Login --group --creators --api`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
