@@ -1,1 +1,2 @@
 /api/*  https://api.inventory.steffbeckers.eu/api/:splat
+/*  /index.html  200
