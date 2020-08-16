@@ -25,11 +25,14 @@ https://ngrx.io/guide/schematics
 `ng generate @ngrx/schematics:store State --root --statePath store --module app.module.ts`
 `ng generate @ngrx/schematics:effect store/App --root --module app.module.ts --group --creators --api`
 
-Auth module
+Authentication
 `ng generate module auth --route auth --module app.module.ts`
 `ng generate @ngrx/schematics:feature auth/store/Auth --module auth/auth.module.ts --group --creators --api`
 `ng generate @ngrx/schematics:action auth/store/Login --group --creators --api`
 `ng generate component auth/Login --module auth/auth.module.ts`
+`ng generate service auth/Auth`
+`npm i oidc-client`
+`ng generate component auth/oidc-callback --module auth/auth.module.ts`
 
 ## Build
 

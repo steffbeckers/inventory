@@ -6,6 +6,11 @@
       <!-- <h5 class="hint">Use your Company ID to sign in or create one now</h5> -->
     </section>
     <div class="login-group">
+      <button (click)="loginWithOIdc()" type="button" class="btn btn-primary">
+        LOGIN WITH SINGLE SIGN-ON
+      </button>
+    </div>
+    <div class="login-group">
       <!-- <clr-select-container>
         <label class="clr-sr-only">User Role</label>
         <select clrSelect name="type" [(ngModel)]="form.type">
@@ -42,9 +47,10 @@
           formControlName="rememberMe"
         />
       </clr-checkbox-wrapper>
-      <div class="error active">
+      <!-- TODO: Error messages -->
+      <!-- <div class="error active">
         Invalid username or password
-      </div>
+      </div> -->
       <button type="submit" class="btn btn-primary">LOGIN</button>
       <a class="signup">Sign up for a new account</a>
     </div>
