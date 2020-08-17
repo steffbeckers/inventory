@@ -36,6 +36,9 @@ Authentication
 `npm i oidc-client`
 `ng generate component auth/oidc-callback --module auth/auth.module.ts`
 
+Dashboard (root)
+`ng generate module dashboard --route dashboard --module app.module.ts`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.

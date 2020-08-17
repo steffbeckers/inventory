@@ -6,13 +6,15 @@ export const authFeatureKey = 'auth';
 export interface State {
   loading: boolean;
   error: any;
-  token: string;
+  access_token: string;
+  token_type: string;
 }
 
 export const initialState: State = {
   loading: false,
   error: null,
-  token: null,
+  access_token: null,
+  token_type: null,
 };
 
 export const reducer = createReducer(
@@ -31,7 +33,8 @@ export const reducer = createReducer(
         ...state,
         loading: false,
         error: null,
-        token: authenticated.access_token,
+        access_token: authenticated.access_token,
+        token_type: authenticated.token_type,
       };
     }
   ),
