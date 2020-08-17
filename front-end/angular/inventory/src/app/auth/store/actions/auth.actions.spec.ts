@@ -1,7 +1,13 @@
 import * as fromAuth from './auth.actions';
 
-describe('loadAuths', () => {
+describe('loginWithEmailOrUsernamePassword', () => {
   it('should return an action', () => {
-    expect(fromAuth.loadAuths().type).toBe('[Auth] Load Auths');
+    expect(
+      fromAuth.loginWithEmailOrUsernamePassword({
+        emailOrUsername: '',
+        password: '',
+        rememberMe: false,
+      }).type
+    ).toBe('[Auth] Login password');
   });
 });

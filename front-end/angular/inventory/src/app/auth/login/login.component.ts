@@ -1,9 +1,7 @@
+import * as AuthActions from '../store/actions/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// TODO: Move to action with effect
-import { AuthService } from '../auth.service';
-import { User } from 'oidc-client';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-auth-login',
@@ -17,7 +15,7 @@ export class AuthLoginComponent implements OnInit {
     rememberMe: [true],
   });
 
-  constructor(public fb: FormBuilder, private authService: AuthService) {}
+  constructor(private store: Store, public fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
@@ -25,17 +23,13 @@ export class AuthLoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-  }
 
-  async loginWithOIdc(): Promise<void> {
-    // TESTing OIdc auth flow:
-
-    const user: User = await this.authService.getCurrentUser();
-
-    console.log('USER', user);
-
-    if (!user) {
-      this.authService.startAuthentication();
-    }
+    this.store.dispatch(
+      AuthActions.loginWithEmailOrUsernamePassword({
+        emailOrUsername: this.loginForm.value.emailOrUsername,
+        password: this.loginForm.value.password,
+        rememberMe: this.loginForm.value.rememberMe,
+      })
+    );
   }
 }

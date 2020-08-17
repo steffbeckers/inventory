@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // TODO: Move to action with effect
 import { AuthService } from '../auth.service';
-import { User } from 'oidc-client';
+// import { User } from 'oidc-client';
 
 @Component({
   selector: 'app-oidc-callback',
@@ -13,10 +13,8 @@ export class OidcCallbackComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   async ngOnInit(): Promise<void> {
-    // TESTing OIdc auth flow:
-
-    const user: User = await this.authService.completeAuthentication();
-
-    console.log('USER', user);
+    // OIDC test
+    // const user: User = await this.authService.completeAuthentication();
+    // console.log('USER', user);
   }
 }

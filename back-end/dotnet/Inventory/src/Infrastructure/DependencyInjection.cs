@@ -29,16 +29,27 @@ namespace Inventory.Infrastructure
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+                    //options.Clients.AddSPA("angular", options =>
+                    //{
+                    //    options.WithRedirectUri("http://localhost:4200/auth/oidc-callback");
+                    //    options.WithLogoutRedirectUri("http://localhost:4200");
+                    //    options.WithoutClientSecrets();
+                    //    options.WithScopes(
+                    //        IdentityServerConstants.StandardScopes.OpenId,
+                    //        IdentityServerConstants.StandardScopes.Profile
+                    //    );
+                    //});
                     options.Clients.Add(new Client()
                     {
                         ClientId = "angular",
                         ClientName = "Angular app",
                         RequireClientSecret = false,
-                        AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                         AllowAccessTokensViaBrowser = true,
                         AllowedScopes = new List<string>() {
                             IdentityServerConstants.StandardScopes.OpenId,
-                            IdentityServerConstants.StandardScopes.Profile
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "Inventory.APIAPI"
                         },
                         // TODO: Configurable
                         AllowedCorsOrigins = new List<string>() { "http://localhost:4200" },

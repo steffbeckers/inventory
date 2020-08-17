@@ -1,24 +1,31 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
-
 import * as AuthActions from '../actions/auth.actions';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { AuthService } from '../../auth.service';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import {
+  EmailOrUsernamePasswordCredentialsDto,
+  AuthenticatedDto,
+} from '../../auth.dtos';
 
 @Injectable()
 export class AuthEffects {
-  loadAuths$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.loadAuths),
-      concatMap(() =>
-        /** An EMPTY observable only emits completion. Replace with your own observable API request */
-        EMPTY.pipe(
-          map((data) => AuthActions.loadAuthsSuccess({ data })),
-          catchError((error) => of(AuthActions.loadAuthsFailure({ error })))
+  constructor(private actions$: Actions, private authService: AuthService) {}
+
+  loginWithEmailOrUsernamePassword$ = createEffect((): any =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginWithEmailOrUsernamePassword),
+      exhaustMap((credentials: EmailOrUsernamePasswordCredentialsDto) =>
+        this.authService.loginWithPassword(credentials).pipe(
+          map((authenticated: AuthenticatedDto) =>
+            AuthActions.loginWithEmailOrUsernamePasswordSuccess(authenticated)
+          ),
+          catchError((error) =>
+            of(AuthActions.loginWithEmailOrUsernamePasswordFailure(error))
+          )
         )
       )
-    );
-  });
-
-  constructor(private actions$: Actions) {}
+    )
+  );
 }
