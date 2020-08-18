@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import {
   AuthenticatedDto,
   EmailOrUsernamePasswordCredentialsDto,
+  UserInfoResponse,
 } from './auth.dtos';
-
-// OIDC test
-// import { UserManager, UserManagerSettings, User } from 'oidc-client';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +17,15 @@ export class AuthService {
   // private manager = new UserManager({
   //   authority: environment.api_base_url,
   //   client_id: 'angular',
-  //   // TODO: Environment settings
-  //   redirect_uri: 'http://localhost:4200/auth/oidc-callback',
-  //   post_logout_redirect_uri: 'http://localhost:4200/',
+  //   redirect_uri: `${window.origin}/auth/oidc-callback`,
+  //   post_logout_redirect_uri: window.origin,
   //   response_type: 'token',
   //   scope: 'openid profile',
   //   filterProtocolClaims: true,
   //   loadUserInfo: true,
-  //   automaticSilentRenew: true,
-  //   // TODO: Environment settings
-  //   silent_redirect_uri: 'http://localhost:4200/silent-refresh.html',
+  //   // TODO: Test
+  //   // automaticSilentRenew: true,
+  //   // silent_redirect_uri: `${window.origin}/silent-refresh.html`,
   // } as UserManagerSettings);
 
   constructor(private http: HttpClient) {}
@@ -48,11 +46,13 @@ export class AuthService {
     );
   }
 
-  // OIDC test
-  // async getCurrentUser(): Promise<User> {
-  //   return await this.manager.getUser();
-  // }
+  loadUserInfo(): Observable<UserInfoResponse> {
+    return this.http.get<UserInfoResponse>(
+      `${environment.api_base_url}/connect/userinfo`
+    );
+  }
 
+  // OIDC test
   // startAuthentication(): Promise<void> {
   //   return this.manager.signinRedirect();
   // }

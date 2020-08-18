@@ -1,7 +1,14 @@
 import * as AuthActions from '../actions/auth.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../auth.service';
-import { catchError, exhaustMap, map, tap, mapTo } from 'rxjs/operators';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  tap,
+  mapTo,
+  switchMap,
+} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -27,6 +34,18 @@ export class AuthEffects {
           catchError((error) =>
             of(AuthActions.loginWithEmailOrUsernamePasswordFailure({ error }))
           )
+        )
+      )
+    )
+  );
+
+  loadUserInfo$ = createEffect((): any =>
+    this.actions$.pipe(
+      ofType(AuthActions.loadUserInfo),
+      switchMap(() =>
+        this.authService.loadUserInfo().pipe(
+          map((userInfo) => AuthActions.loadUserInfoSuccess({ userInfo })),
+          catchError((error) => of(AuthActions.loadUserInfoFailure({ error })))
         )
       )
     )

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import {
   EmailOrUsernamePasswordCredentialsDto,
   AuthenticatedDto,
+  UserInfoResponse,
 } from '../../auth.dtos';
 
 export const loginWithEmailOrUsernamePassword = createAction(
@@ -20,7 +21,7 @@ export const loginWithEmailOrUsernamePasswordFailure = createAction(
 export const loadUserInfo = createAction('[Auth] Load user info');
 export const loadUserInfoSuccess = createAction(
   '[Auth] Load user info Success',
-  props<{ userInfo: any }>()
+  props<{ userInfo: UserInfoResponse }>()
 );
 export const loadUserInfoFailure = createAction(
   '[Auth] Load user info Failure',

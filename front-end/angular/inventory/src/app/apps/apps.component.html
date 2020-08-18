@@ -23,22 +23,29 @@
         />
       </label>
     </form>
-    <div class="header-actions">
-      <clr-dropdown>
-        <button
-          class="nav-text"
-          clrDropdownTrigger
-          aria-label="open user profile"
-        >
-          john.doe@vmware.com
-          <clr-icon shape="caret down"></clr-icon>
-        </button>
-        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a clrDropdownItem>Preferences</a>
-          <a (click)="logout()" clrDropdownItem>Log out</a>
-        </clr-dropdown-menu>
-      </clr-dropdown>
-    </div>
+    <ng-container *ngIf="(isAuthenticated$ | async) && (user$ | async) as user">
+      <div class="header-actions">
+        <clr-dropdown>
+          <button
+            class="nav-text"
+            clrDropdownTrigger
+            aria-label="open user profile"
+          >
+            <span class="username">{{ user.username }}</span>
+            <clr-icon shape="caret down"></clr-icon>
+          </button>
+          <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+            <a clrDropdownItem>Preferences</a>
+            <a (click)="logout()" clrDropdownItem>Log out</a>
+          </clr-dropdown-menu>
+        </clr-dropdown>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(isAuthenticated$ | async) === false">
+      <div class="header-actions">
+        <a routerLink="/auth/login" class="nav-link nav-text">Login</a>
+      </div>
+    </ng-container>
   </header>
   <nav class="subnav">
     <ul class="nav">

@@ -8,9 +8,14 @@ export const selectAuthState = createFeatureSelector<fromAuth.State>(
 export const selectIsAuthenticated = createSelector(
   selectAuthState,
   (state) => {
+    // TODO: Check token valid?
     return !!state.access_token;
   }
 );
+
+export const selectUser = createSelector(selectAuthState, (state) => {
+  return state.user;
+});
 
 export const selectAuthorizationHeaderValue = createSelector(
   selectAuthState,
