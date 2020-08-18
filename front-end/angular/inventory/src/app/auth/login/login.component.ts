@@ -1,5 +1,7 @@
+import * as AuthActions from '../store/actions/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-auth-login',
@@ -13,7 +15,7 @@ export class AuthLoginComponent implements OnInit {
     rememberMe: [true],
   });
 
-  constructor(public fb: FormBuilder) {}
+  constructor(private store: Store, public fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
@@ -21,5 +23,15 @@ export class AuthLoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+
+    this.store.dispatch(
+      AuthActions.loginWithEmailOrUsernamePassword({
+        credentials: {
+          emailOrUsername: this.loginForm.value.emailOrUsername,
+          password: this.loginForm.value.password,
+          rememberMe: this.loginForm.value.rememberMe,
+        },
+      })
+    );
   }
 }

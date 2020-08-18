@@ -9,9 +9,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { OidcCallbackComponent } from './oidc-callback/oidc-callback.component';
 
 @NgModule({
-  declarations: [AuthComponent, AuthLoginComponent],
+  declarations: [AuthComponent, AuthLoginComponent, OidcCallbackComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

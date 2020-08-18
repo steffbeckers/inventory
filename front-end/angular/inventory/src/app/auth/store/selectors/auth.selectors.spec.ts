@@ -7,6 +7,10 @@ describe('Auth Selectors', () => {
       [fromAuth.authFeatureKey]: {},
     });
 
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      loading: false,
+      error: null,
+      token: null,
+    });
   });
 });

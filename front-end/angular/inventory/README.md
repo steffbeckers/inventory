@@ -24,12 +24,23 @@ https://ngrx.io/guide/schematics
 `npm install @ngrx/schematics @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools`
 `ng generate @ngrx/schematics:store State --root --statePath store --module app.module.ts`
 `ng generate @ngrx/schematics:effect store/App --root --module app.module.ts --group --creators --api`
+`npm install ngrx-store-localstorage`
+`npm install @ngrx/router-store`
 
-Auth module
+Authentication
 `ng generate module auth --route auth --module app.module.ts`
 `ng generate @ngrx/schematics:feature auth/store/Auth --module auth/auth.module.ts --group --creators --api`
 `ng generate @ngrx/schematics:action auth/store/Login --group --creators --api`
 `ng generate component auth/Login --module auth/auth.module.ts`
+`ng generate service auth/Auth`
+`npm i oidc-client`
+`ng generate component auth/oidc-callback --module auth/auth.module.ts`
+
+Apps module (root)
+`ng generate module apps --route apps --module app.module.ts`
+
+Dashboard module (feature)
+`ng generate module dashboard --route dashboard --module app.module.ts`
 
 ## Build
 

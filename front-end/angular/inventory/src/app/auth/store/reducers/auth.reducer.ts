@@ -4,17 +4,48 @@ import * as AuthActions from '../actions/auth.actions';
 export const authFeatureKey = 'auth';
 
 export interface State {
-  user: any;
+  loading: boolean;
+  error: any;
+  access_token: string;
+  token_type: string;
 }
 
 export const initialState: State = {
-  user: null,
+  loading: false,
+  error: null,
+  access_token: null,
+  token_type: null,
 };
 
 export const reducer = createReducer(
   initialState,
-
-  on(AuthActions.loadAuths, (state) => state),
-  on(AuthActions.loadAuthsSuccess, (state, action) => state),
-  on(AuthActions.loadAuthsFailure, (state, action) => state)
+  on(AuthActions.loginWithEmailOrUsernamePassword, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(
+    AuthActions.loginWithEmailOrUsernamePasswordSuccess,
+    (state, { authenticated }) => {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        access_token: authenticated.access_token,
+        token_type: authenticated.token_type,
+      };
+    }
+  ),
+  on(
+    AuthActions.loginWithEmailOrUsernamePasswordFailure,
+    (state, { error }) => {
+      return {
+        ...state,
+        loading: false,
+        error,
+      };
+    }
+  )
 );

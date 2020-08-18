@@ -1,0 +1,43 @@
+<div class="main-container">
+  <header class="header header-6">
+    <div class="branding">
+      <span class="title">Inventory</span>
+    </div>
+    <div class="header-nav">
+      <a routerLink="" routerLinkActive="active" class="nav-link nav-text"
+        >Dashboard</a
+      >
+      <a routerLinkActive="active" class="nav-link nav-text">Items</a>
+      <a routerLinkActive="active" class="nav-link nav-text">Categories</a>
+    </div>
+    <form class="search">
+      <label for="search_input">
+        <input
+          id="search_input"
+          class="inventory-override"
+          type="text"
+          placeholder="Search for keywords..."
+        />
+      </label>
+    </form>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button
+          class="nav-text"
+          clrDropdownTrigger
+          aria-label="open user profile"
+        >
+          john.doe@vmware.com
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a clrDropdownItem>Preferences</a>
+          <a clrDropdownItem>Log out</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    </div>
+  </header>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
