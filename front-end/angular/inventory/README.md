@@ -40,7 +40,10 @@ Apps module (root)
 `ng generate module apps --route apps --module app.module.ts`
 
 Dashboard module (feature)
-`ng generate module dashboard --route dashboard --module app.module.ts`
+`ng generate module dashboard --route dashboard --module apps/apps.module.ts`
+
+Items module (feature)
+`ng generate module items --route items --module apps/apps.module.ts`
 
 ## Build
 
