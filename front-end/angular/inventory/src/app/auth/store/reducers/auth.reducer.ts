@@ -47,5 +47,8 @@ export const reducer = createReducer(
         error,
       };
     }
-  )
+  ),
+  on(AuthActions.logout, (state) => {
+    return initialState;
+  })
 );
