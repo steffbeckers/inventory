@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as AuthActions from '../actions/auth.actions';
+import { User } from '../../auth.models';
 
 export const authFeatureKey = 'auth';
 
@@ -8,6 +9,7 @@ export interface State {
   error: any;
   access_token: string;
   token_type: string;
+  user: User;
 }
 
 export const initialState: State = {
@@ -15,6 +17,7 @@ export const initialState: State = {
   error: null,
   access_token: null,
   token_type: null,
+  user: null,
 };
 
 export const reducer = createReducer(
@@ -48,6 +51,32 @@ export const reducer = createReducer(
       };
     }
   ),
+  on(AuthActions.loadUserInfo, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(AuthActions.loadUserInfoSuccess, (state, { userInfo }) => {
+    return {
+      ...state,
+      loading: false,
+      error: null,
+      user: {
+        id: userInfo.sub,
+        username: userInfo.preferred_username,
+        email: userInfo.email,
+      },
+    };
+  }),
+  on(AuthActions.loadUserInfoFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      error,
+    };
+  }),
   on(AuthActions.logout, (state) => {
     return initialState;
   })
