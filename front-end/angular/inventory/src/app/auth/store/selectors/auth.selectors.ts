@@ -11,3 +11,10 @@ export const selectIsAuthenticated = createSelector(
     return !!state.access_token;
   }
 );
+
+export const selectAuthorizationHeaderValue = createSelector(
+  selectAuthState,
+  (state) => {
+    return `${state.token_type} ${state.access_token}`;
+  }
+);

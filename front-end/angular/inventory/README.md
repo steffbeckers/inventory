@@ -30,7 +30,6 @@ https://ngrx.io/guide/schematics
 Authentication
 `ng generate module auth --route auth --module app.module.ts`
 `ng generate @ngrx/schematics:feature auth/store/Auth --module auth/auth.module.ts --group --creators --api`
-`ng generate @ngrx/schematics:action auth/store/Login --group --creators --api`
 `ng generate component auth/Login --module auth/auth.module.ts`
 `ng generate service auth/Auth`
 `npm i oidc-client`
@@ -44,6 +43,7 @@ Dashboard module (feature)
 
 Items module (feature)
 `ng generate module items --route items --module apps/apps.module.ts`
+`ng generate @ngrx/schematics:feature apps/items/store/Items --module apps/items/items.module.ts --group --creators --api`
 
 ## Build
 
