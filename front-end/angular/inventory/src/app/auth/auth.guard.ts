@@ -14,6 +14,7 @@ export class IsAuthenticatedAuthGuard implements CanActivate {
       select(selectIsAuthenticated),
       first(),
       switchMap((isAuthenticated) => {
+        // TODO: Move to action => effect to isolade side effects?
         if (!isAuthenticated) {
           this.router.navigateByUrl('/auth/login');
         }
