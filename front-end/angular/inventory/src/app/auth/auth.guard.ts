@@ -1,36 +1,31 @@
+import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-} from '@angular/router';
-import { selectAuthState } from './store/selectors/auth.selectors';
 import { map } from 'rxjs/operators';
-import * as AuthActions from './store/actions/auth.actions';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { selectIsAuthenticated } from './store/selectors/auth.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class IsAuthenticatedAuthGuard implements CanActivate {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  canActivate(): Observable<boolean> {
     return this.store.pipe(
-      select(selectAuthState),
-      map((authState) => {
-        console.log('authState', authState);
+      select(selectIsAuthenticated),
+      map((isAuthenticated: boolean) => {
+        console.log(
+          'IsAuthenticatedAuthGuard => isAuthenticated',
+          isAuthenticated
+        );
 
-        // TODO: This hangs the browser :(, keeps navigating?
+        if (isAuthenticated) {
+          return true;
+        }
 
-        // if (authState && authState.access_token) {
-        return true;
-        // }
+        // TODO
+        // this.router.navigateByUrl('/auth/login');
 
-        // this.store.dispatch(AuthActions.navigateToLogin());
-        // return false;
+        return false;
       })
     );
   }

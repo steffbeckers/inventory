@@ -1,19 +1,18 @@
+import { AuthModule } from './auth/auth.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { IsAuthenticatedAuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    // loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: () => AuthModule, // Without lazy loading the Auth module
   },
   {
     path: '',
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-    canActivate: [IsAuthenticatedAuthGuard],
+    loadChildren: () => import('./apps/apps.module').then((m) => m.AppsModule),
   },
   {
     path: '**',

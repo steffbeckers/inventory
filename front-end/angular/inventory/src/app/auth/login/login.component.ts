@@ -26,9 +26,11 @@ export class AuthLoginComponent implements OnInit {
 
     this.store.dispatch(
       AuthActions.loginWithEmailOrUsernamePassword({
-        emailOrUsername: this.loginForm.value.emailOrUsername,
-        password: this.loginForm.value.password,
-        rememberMe: this.loginForm.value.rememberMe,
+        credentials: {
+          emailOrUsername: this.loginForm.value.emailOrUsername,
+          password: this.loginForm.value.password,
+          rememberMe: this.loginForm.value.rememberMe,
+        },
       })
     );
   }

@@ -5,10 +5,6 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import {
-  EmailOrUsernamePasswordCredentialsDto,
-  AuthenticatedDto,
-} from '../../auth.dtos';
 
 @Injectable()
 export class AuthEffects {
@@ -21,13 +17,15 @@ export class AuthEffects {
   loginWithEmailOrUsernamePassword$ = createEffect((): any =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithEmailOrUsernamePassword),
-      exhaustMap((credentials: EmailOrUsernamePasswordCredentialsDto) =>
+      exhaustMap(({ credentials }) =>
         this.authService.loginWithPassword(credentials).pipe(
-          map((authenticated: AuthenticatedDto) =>
-            AuthActions.loginWithEmailOrUsernamePasswordSuccess(authenticated)
+          map((authenticated) =>
+            AuthActions.loginWithEmailOrUsernamePasswordSuccess({
+              authenticated,
+            })
           ),
           catchError((error) =>
-            of(AuthActions.loginWithEmailOrUsernamePasswordFailure(error))
+            of(AuthActions.loginWithEmailOrUsernamePasswordFailure({ error }))
           )
         )
       )
@@ -37,7 +35,7 @@ export class AuthEffects {
   navigateAfterLoginWithEmailOrUsernamePasswordSuccess$ = createEffect(
     (): any =>
       this.actions$.pipe(
-        ofType(AuthActions.loginWithEmailOrUsernamePassword),
+        ofType(AuthActions.loginWithEmailOrUsernamePasswordSuccess),
         tap(() => {
           this.router.navigateByUrl('/');
         })

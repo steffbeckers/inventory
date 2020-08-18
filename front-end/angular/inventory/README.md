@@ -36,7 +36,10 @@ Authentication
 `npm i oidc-client`
 `ng generate component auth/oidc-callback --module auth/auth.module.ts`
 
-Dashboard (root)
+Apps module (root)
+`ng generate module apps --route apps --module app.module.ts`
+
+Dashboard module (feature)
 `ng generate module dashboard --route dashboard --module app.module.ts`
 
 ## Build

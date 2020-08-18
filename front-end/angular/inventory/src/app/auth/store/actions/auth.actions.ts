@@ -6,15 +6,15 @@ import {
 
 export const loginWithEmailOrUsernamePassword = createAction(
   '[Auth] Login password',
-  props<EmailOrUsernamePasswordCredentialsDto>()
+  props<{ credentials: EmailOrUsernamePasswordCredentialsDto }>()
 );
 export const loginWithEmailOrUsernamePasswordSuccess = createAction(
   '[Auth] Login password Success',
-  props<AuthenticatedDto>()
+  props<{ authenticated: AuthenticatedDto }>()
 );
 export const loginWithEmailOrUsernamePasswordFailure = createAction(
   '[Auth] Login password Failure',
-  props<any>()
+  props<{ error: any }>()
 );
 
 export const navigateToLogin = createAction('[Auth] Navigate to login');

@@ -28,7 +28,7 @@ export const reducer = createReducer(
   }),
   on(
     AuthActions.loginWithEmailOrUsernamePasswordSuccess,
-    (state, authenticated) => {
+    (state, { authenticated }) => {
       return {
         ...state,
         loading: false,
@@ -38,11 +38,14 @@ export const reducer = createReducer(
       };
     }
   ),
-  on(AuthActions.loginWithEmailOrUsernamePasswordFailure, (state, error) => {
-    return {
-      ...state,
-      loading: false,
-      error,
-    };
-  })
+  on(
+    AuthActions.loginWithEmailOrUsernamePasswordFailure,
+    (state, { error }) => {
+      return {
+        ...state,
+        loading: false,
+        error,
+      };
+    }
+  )
 );
