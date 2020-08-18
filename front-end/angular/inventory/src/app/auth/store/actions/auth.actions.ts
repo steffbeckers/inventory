@@ -17,4 +17,14 @@ export const loginWithEmailOrUsernamePasswordFailure = createAction(
   props<{ error: any }>()
 );
 
+export const loadUserInfo = createAction('[Auth] Load user info');
+export const loadUserInfoSuccess = createAction(
+  '[Auth] Load user info Success',
+  props<{ userInfo: any }>()
+);
+export const loadUserInfoFailure = createAction(
+  '[Auth] Load user info Failure',
+  props<{ error: any }>()
+);
+
 export const logout = createAction('[Auth] Logout');

@@ -14,7 +14,7 @@ export class AuthEffects {
     private router: Router
   ) {}
 
-  loginWithEmailOrUsernamePassword$ = createEffect((): any =>
+  loginWithEmailOrUsernamePassword$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithEmailOrUsernamePassword),
       exhaustMap(({ credentials }) =>
@@ -33,7 +33,7 @@ export class AuthEffects {
   );
 
   navigateAfterLoginWithEmailOrUsernamePasswordSuccess$ = createEffect(
-    (): any =>
+    () =>
       this.actions$.pipe(
         ofType(AuthActions.loginWithEmailOrUsernamePasswordSuccess),
         tap(() => {
@@ -44,7 +44,7 @@ export class AuthEffects {
   );
 
   navigateAfterLogout$ = createEffect(
-    (): any =>
+    () =>
       this.actions$.pipe(
         ofType(AuthActions.logout),
         tap(() => {
