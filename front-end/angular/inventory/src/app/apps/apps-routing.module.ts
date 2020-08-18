@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: AppsComponent,
-    // canActivate: [IsAuthenticatedAuthGuard],
+    canActivate: [IsAuthenticatedAuthGuard],
     children: [
       {
         path: 'items',

@@ -1,14 +1,30 @@
-import { AuthModule } from './auth/auth.module';
+import { AuthComponent } from './auth/auth.component';
+import { AuthLoginComponent } from './auth/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 
 const routes: Routes = [
+  // Dev testing module
+  // {
+  //   path: 'dev',
+  //   loadChildren: () => import('./dev/dev.module').then((m) => m.DevModule),
+  // },
   {
     path: 'auth',
-    // loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    loadChildren: () => AuthModule, // Without lazy loading the Auth module
+    component: AuthComponent,
+    children: [
+      {
+        path: 'login',
+        component: AuthLoginComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
@@ -26,7 +42,7 @@ const routes: Routes = [
     StoreModule.forRoot({
       router: routerReducer,
     }),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { enableTracing: false }),
     StoreRouterConnectingModule.forRoot(),
   ],
   exports: [RouterModule],

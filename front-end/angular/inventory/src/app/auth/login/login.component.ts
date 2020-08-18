@@ -19,6 +19,14 @@ export class AuthLoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // TODO: Remove
+  demoLoginAdminCredentials(): void {
+    this.loginForm.patchValue({
+      emailOrUsername: 'administrator@localhost',
+      password: 'Administrator1!',
+    });
+  }
+
   loginWithPassword(): void {
     if (this.loginForm.invalid) {
       return;
