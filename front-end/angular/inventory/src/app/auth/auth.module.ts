@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { OidcCallbackComponent } from './oidc-callback/oidc-callback.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [AuthComponent, AuthLoginComponent, OidcCallbackComponent],
@@ -21,6 +23,13 @@ import { OidcCallbackComponent } from './oidc-callback/oidc-callback.component';
     ClarityModule,
     FormsModule,
     ReactiveFormsModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
 })
 export class AuthModule {}

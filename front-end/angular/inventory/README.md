@@ -44,6 +44,7 @@ Dashboard module (feature)
 Items module (feature)
 `ng generate module items --route items --module apps/apps.module.ts`
 `ng generate @ngrx/schematics:feature apps/items/store/Items --module apps/items/items.module.ts --group --creators --api`
+`ng generate component apps/items/Overview --module apps/items/items.module.ts`
 
 ## Build
 

@@ -7,6 +7,8 @@ namespace Inventory.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
+        DbSet<Item> Items { get; set; }
+
         DbSet<TodoList> TodoLists { get; set; }
 
         DbSet<TodoItem> TodoItems { get; set; }

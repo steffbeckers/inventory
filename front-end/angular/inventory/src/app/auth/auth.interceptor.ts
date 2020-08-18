@@ -1,4 +1,3 @@
-import { AuthModule } from './auth.module';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -11,9 +10,7 @@ import {
 import { selectAuthorizationHeaderValue } from './store/selectors/auth.selectors';
 import { first, mergeMap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: AuthModule,
-})
+@Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(private store: Store) {}
 
