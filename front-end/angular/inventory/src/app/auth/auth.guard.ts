@@ -1,7 +1,7 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { take, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { selectIsAuthenticated } from './store/selectors/auth.selectors';
 
@@ -12,21 +12,35 @@ export class IsAuthenticatedAuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.store.pipe(
       select(selectIsAuthenticated),
-      map((isAuthenticated: boolean) => {
+      // take(1),
+      switchMap((isAuthenticated) => {
         console.log(
           'IsAuthenticatedAuthGuard => isAuthenticated',
           isAuthenticated
         );
 
-        if (isAuthenticated) {
-          return true;
+        if (!isAuthenticated) {
+          // TODO: Hangs browser with navigation loop
+          // this.router.navigateByUrl('/auth/login');
+          return of(false);
         }
 
-        // TODO
-        // this.router.navigateByUrl('/auth/login');
-
-        return false;
+        return of(true);
       })
+      // map((isAuthenticated) => {
+      //   console.log(
+      //     'IsAuthenticatedAuthGuard => isAuthenticated',
+      //     isAuthenticated
+      //   );
+
+      //   if (!isAuthenticated) {
+      //     // TODO
+      //     // this.router.navigateByUrl('/auth/login');
+      //     return false;
+      //   }
+
+      //   return true;
+      // })
     );
   }
 }

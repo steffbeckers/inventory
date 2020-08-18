@@ -17,4 +17,4 @@ export const loginWithEmailOrUsernamePasswordFailure = createAction(
   props<{ error: any }>()
 );
 
-export const navigateToLogin = createAction('[Auth] Navigate to login');
+export const logout = createAction('[Auth] Logout');
