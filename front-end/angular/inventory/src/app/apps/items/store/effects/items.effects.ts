@@ -13,7 +13,7 @@ export class ItemsEffects {
     this.actions$.pipe(
       ofType(ItemsActions.loadItems),
       switchMap(() =>
-        this.itemsService.get().pipe(
+        this.itemsService.getItems().pipe(
           map((items: ItemDto[]) => ItemsActions.loadItemsSuccess({ items })),
           catchError((error) => of(ItemsActions.loadItemsFailure({ error })))
         )

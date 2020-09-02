@@ -35,6 +35,7 @@ namespace Inventory.Infrastructure.Persistence
         public DbSet<ImageTranslation> ImageTranslations { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemTranslation> ItemTranslations { get; set; }
+        public DbSet<ItemInfo> ItemInfos { get; set; }
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<ItemTypeTranslation> ItemTypeTranslations { get; set; }
         public DbSet<Language> Languages { get; set; }

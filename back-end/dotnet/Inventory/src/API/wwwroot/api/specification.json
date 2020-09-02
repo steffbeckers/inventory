@@ -11,7 +11,7 @@
         "tags": [
           "Items"
         ],
-        "operationId": "Items_Get",
+        "operationId": "Items_GetItems",
         "responses": {
           "200": {
             "description": "",
@@ -22,6 +22,42 @@
                   "items": {
                     "$ref": "#/components/schemas/ItemDto"
                   }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Items"
+        ],
+        "operationId": "Items_CreateItem",
+        "requestBody": {
+          "x-name": "createItemDto",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -432,6 +468,23 @@
             "type": "string",
             "nullable": true
           },
+          "infos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ItemInfoDto"
+            }
+          }
+        }
+      },
+      "ItemInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
           "purchaseDate": {
             "type": "string",
             "format": "date-time",
@@ -443,6 +496,49 @@
             "nullable": true
           },
           "expirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastUsed": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "CreateItemDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemTypeId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "purchasePrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastUsed": {
             "type": "string",
             "format": "date-time",
             "nullable": true

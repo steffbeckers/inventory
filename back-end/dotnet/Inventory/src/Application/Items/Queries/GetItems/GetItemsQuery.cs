@@ -21,6 +21,7 @@ namespace Inventory.Application.Items.Queries.GetItems
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+
         public GetItemsQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
