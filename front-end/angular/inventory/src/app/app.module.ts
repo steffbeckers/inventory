@@ -8,7 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ClarityModule } from '@clr/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from 'src/environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { ErrorInterceptor } from 'src/app/shared/interceptors/error.interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { metaReducers, reducers } from './store';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -31,6 +32,11 @@ import { StoreModule } from '@ngrx/store';
     {
       provide: API_BASE_URL,
       useValue: environment.api_base_url,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

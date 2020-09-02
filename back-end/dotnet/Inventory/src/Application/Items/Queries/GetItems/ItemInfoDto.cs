@@ -6,11 +6,12 @@ using System.Text;
 
 namespace Inventory.Application.Items.Queries.GetItems
 {
-    public class ItemDto : IMapFrom<Item>
+    public class ItemInfoDto : IMapFrom<ItemInfo>
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<ItemInfoDto> Infos { get; set; }
+        public DateTime? PurchaseDate { get; set; }
+        public double? PurchasePrice { get; set; }
+        public DateTime? ExpirationDate { get; set; }
+        public DateTime? LastUsed { get; set; }
     }
 }
