@@ -1,10 +1,11 @@
 ﻿using Inventory.Domain.Common;
+using Inventory.Domain.Events;
 using System;
 using System.Collections.Generic;
 
 namespace Inventory.Domain.Entities
 {
-    public class Item : AuditableEntity
+    public class Item : BaseEntity<Guid>
     {
         public Item()
         {
@@ -12,9 +13,10 @@ namespace Inventory.Domain.Entities
             Images = new List<ImageItem>();
             RelatedItems = new List<RelatedItem>();
             Translations = new List<ItemTranslation>();
+
+            Events.Add(new ItemCreatedEvent(this));
         }
 
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

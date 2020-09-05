@@ -3,11 +3,14 @@ using Inventory.Application.Common.Interfaces;
 using Inventory.Domain.Common;
 using Inventory.Domain.Entities;
 using Inventory.Infrastructure.Identity;
+using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Options;
+using System;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +19,7 @@ namespace Inventory.Infrastructure.Persistence
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
+        private readonly IMediator _mediator;
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
@@ -23,9 +27,12 @@ namespace Inventory.Infrastructure.Persistence
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
+            IMediator mediator,
             ICurrentUserService currentUserService,
-            IDateTime dateTime) : base(options, operationalStoreOptions)
+            IDateTime dateTime
+        ) : base(options, operationalStoreOptions)
         {
+            _mediator = mediator;
             _currentUserService = currentUserService;
             _dateTime = dateTime;
         }
@@ -44,9 +51,10 @@ namespace Inventory.Infrastructure.Persistence
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            // Update audit fields of entity
+            foreach (var entry in ChangeTracker.Entries<BaseEntity<Guid>>())
             {
                 switch (entry.State)
                 {
@@ -61,7 +69,32 @@ namespace Inventory.Infrastructure.Persistence
                 }
             }
 
-            return base.SaveChangesAsync(cancellationToken);
+            // Save to database
+            int result = await base.SaveChangesAsync(cancellationToken);
+
+            // Events
+
+            // Ignore events if no dispatcher provided
+            if (_mediator == null) return result;
+
+            // Dispatch events only if save was successful
+            var entitiesWithEvents = ChangeTracker.Entries<BaseEntity<Guid>>()
+                .Select(e => e.Entity)
+                .Where(e => e.Events.Any())
+                .ToArray();
+
+            foreach (var entity in entitiesWithEvents)
+            {
+                var events = entity.Events.ToArray();
+                entity.Events.Clear();
+
+                foreach (var domainEvent in events)
+                {
+                    await _mediator.Publish(domainEvent).ConfigureAwait(false);
+                }
+            }
+
+            return result;
         }
 
         public async Task BeginTransactionAsync()

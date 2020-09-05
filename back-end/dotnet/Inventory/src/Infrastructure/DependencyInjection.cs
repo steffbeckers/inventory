@@ -61,6 +61,16 @@ namespace Inventory.Infrastructure
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
+            // Email service
+            string emailServiceProvider = configuration.GetSection("EmailService")
+                                                       .GetValue<string>("Provider");
+            switch (emailServiceProvider)
+            {
+                case "SendGrid":
+                    services.AddTransient<IEmailService, SendGridService>();
+                    break;
+            }
+
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 

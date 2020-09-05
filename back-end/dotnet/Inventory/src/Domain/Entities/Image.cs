@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Inventory.Domain.Entities
 {
-    public class Image : AuditableEntity
+    public class Image : BaseEntity<Guid>
     {
         public Image()
         {
@@ -12,7 +12,6 @@ namespace Inventory.Domain.Entities
             Translations = new List<ImageTranslation>();
         }
 
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
