@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace Inventory.Domain.Entities
 {
-    public class ItemInfo : AuditableEntity
+    public class ItemInfo : BaseEntity<Guid>
     {
-        public Guid Id { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public double? PurchasePrice { get; set; }
         public DateTime? ExpirationDate { get; set; }

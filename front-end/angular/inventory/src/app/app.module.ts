@@ -23,7 +23,9 @@ import { StoreModule } from '@ngrx/store';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    // TODO: Disable in production:
+    // !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([AppEffects]),
     AuthModule,
     ClarityModule,
