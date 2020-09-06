@@ -38,7 +38,7 @@ export class AuthService {
     formData.append('grant_type', 'password');
     formData.append('username', credentials.emailOrUsername);
     formData.append('password', credentials.password);
-    formData.append('scope', 'openid profile Inventory.APIAPI');
+    formData.append('scope', 'openid profile offline_access Inventory.APIAPI');
 
     return this.http.post<AuthenticatedDto>(
       `${environment.api_base_url}/connect/token`,
