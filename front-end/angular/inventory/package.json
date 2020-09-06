@@ -8,7 +8,8 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "lint": "ng lint",
-    "format": "prettier --write \"{src,e2e}/**/*.{ts,html,scss}\""
+    "format": "prettier --write \"{src,e2e}/**/*.{ts,html,scss}\"",
+    "compodoc": "compodoc -p tsconfig.json"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "@angular-devkit/build-angular": "~0.1000.5",
     "@angular/cli": "~10.0.5",
     "@angular/compiler-cli": "~10.0.6",
+    "@compodoc/compodoc": "^1.1.11",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
