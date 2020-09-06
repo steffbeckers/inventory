@@ -28,4 +28,9 @@ export class AppsComponent implements OnInit {
   logout(): void {
     this.store.dispatch(AuthActions.logout());
   }
+
+  // TEST
+  refreshToken(): void {
+    this.store.dispatch(AuthActions.refreshToken());
+  }
 }

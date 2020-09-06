@@ -13,6 +13,8 @@ export interface AuthenticatedDto {
   access_token: string;
   expires_in: string;
   token_type: string;
+  refresh_token: string;
+  id_token: string;
   scope: string;
 }
 
