@@ -9,7 +9,7 @@
     "e2e": "ng e2e",
     "lint": "ng lint",
     "format": "prettier --write \"{src,e2e}/**/*.{ts,html,scss}\"",
-    "compodoc": "compodoc -p tsconfig.json"
+    "docs": "compodoc -p tsconfig.json -s"
   },
   "private": true,
   "dependencies": {
