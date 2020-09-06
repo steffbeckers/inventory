@@ -28,4 +28,17 @@ export const loadUserInfoFailure = createAction(
   props<{ error: any }>()
 );
 
+export const refreshToken = createAction(
+  '[Auth] Refresh token'
+  // props<{ token: string }>()
+);
+export const refreshTokenSuccess = createAction(
+  '[Auth] Refresh token Success',
+  props<{ authenticated: AuthenticatedDto }>()
+);
+export const refreshTokenFailure = createAction(
+  '[Auth] Refresh token Failure',
+  props<{ error: any }>()
+);
+
 export const logout = createAction('[Auth] Logout');

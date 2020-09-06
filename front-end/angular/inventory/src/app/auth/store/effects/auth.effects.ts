@@ -1,22 +1,18 @@
 import * as AuthActions from '../actions/auth.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../auth.service';
-import {
-  catchError,
-  exhaustMap,
-  map,
-  tap,
-  mapTo,
-  switchMap,
-} from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { selectAuthState } from '../selectors/auth.selectors';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
+    private store: Store,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -39,7 +35,39 @@ export class AuthEffects {
     )
   );
 
-  loadUserInfo$ = createEffect((): any =>
+  // TODO: Review this code with withLatestFrom store?
+  // refreshToken$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.refreshToken),
+  //     switchMap(() =>
+  //       this.store.pipe(
+  //         select(selectAuthState),
+  //         exhaustMap(({ refresh_token }) =>
+  //           this.authService.refreshToken(refresh_token).pipe(
+  //             map((authenticated) =>
+  //               AuthActions.refreshTokenSuccess({
+  //                 authenticated,
+  //               })
+  //             ),
+  //             catchError((error) =>
+  //               of(AuthActions.refreshTokenFailure({ error }))
+  //             )
+  //           )
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
+
+  // TODO: This doesn't work as expected
+  // loadUserInfoAfterRefreshTokenSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.refreshTokenSuccess),
+  //     switchMap((action) => [AuthActions.loadUserInfo()])
+  //   )
+  // );
+
+  loadUserInfo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loadUserInfo),
       switchMap(() =>

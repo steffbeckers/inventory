@@ -38,7 +38,20 @@ export class AuthService {
     formData.append('grant_type', 'password');
     formData.append('username', credentials.emailOrUsername);
     formData.append('password', credentials.password);
-    formData.append('scope', 'openid profile Inventory.APIAPI');
+    formData.append('scope', 'openid profile offline_access Inventory.APIAPI');
+
+    return this.http.post<AuthenticatedDto>(
+      `${environment.api_base_url}/connect/token`,
+      formData
+    );
+  }
+
+  refreshToken(token: string): Observable<AuthenticatedDto> {
+    const formData = new FormData();
+    formData.append('client_id', 'angular');
+    formData.append('grant_type', 'refresh_token');
+    formData.append('refresh_token', token);
+    formData.append('scope', 'openid profile offline_access Inventory.APIAPI');
 
     return this.http.post<AuthenticatedDto>(
       `${environment.api_base_url}/connect/token`,

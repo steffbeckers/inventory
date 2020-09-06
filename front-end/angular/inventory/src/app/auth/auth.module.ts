@@ -5,13 +5,13 @@ import { AuthLoginComponent } from './login/login.component';
 import { ClarityModule } from '@clr/angular';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { OidcCallbackComponent } from './oidc-callback/oidc-callback.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './auth.interceptor';
+import { NgModule } from '@angular/core';
+import { OidcCallbackComponent } from './oidc-callback/oidc-callback.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RefreshTokenInterceptor, TokenInterceptor } from './auth.interceptor';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AuthComponent, AuthLoginComponent, OidcCallbackComponent],
@@ -27,6 +27,11 @@ import { RouterModule } from '@angular/router';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
       multi: true,
     },
   ],

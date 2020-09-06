@@ -46,6 +46,11 @@ namespace Inventory.Infrastructure
                         RequireClientSecret = false,
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                         AllowAccessTokensViaBrowser = true,
+                        AllowOfflineAccess = true,
+                        AccessTokenType = AccessTokenType.Jwt,
+                        // TODO
+                        // AccessTokenLifetime = 10,
+                        RefreshTokenUsage = TokenUsage.OneTimeOnly,
                         AllowedScopes = new List<string>() {
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,

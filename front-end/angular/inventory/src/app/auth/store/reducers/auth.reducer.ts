@@ -9,6 +9,8 @@ export interface State {
   error: any;
   access_token: string;
   token_type: string;
+  refresh_token: string;
+  id_token: string;
   user: User;
 }
 
@@ -17,6 +19,8 @@ export const initialState: State = {
   error: null,
   access_token: null,
   token_type: null,
+  refresh_token: null,
+  id_token: null,
   user: null,
 };
 
@@ -38,6 +42,7 @@ export const reducer = createReducer(
         error: null,
         access_token: authenticated.access_token,
         token_type: authenticated.token_type,
+        refresh_token: authenticated.refresh_token,
       };
     }
   ),
@@ -71,6 +76,31 @@ export const reducer = createReducer(
     };
   }),
   on(AuthActions.loadUserInfoFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      error,
+    };
+  }),
+  on(AuthActions.refreshToken, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(AuthActions.refreshTokenSuccess, (state, { authenticated }) => {
+    return {
+      ...state,
+      loading: false,
+      error: null,
+      access_token: authenticated.access_token,
+      token_type: authenticated.token_type,
+      refresh_token: authenticated.refresh_token,
+      id_token: authenticated.id_token,
+    };
+  }),
+  on(AuthActions.refreshTokenFailure, (state, { error }) => {
     return {
       ...state,
       loading: false,
