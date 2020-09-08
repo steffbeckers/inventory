@@ -1,5 +1,7 @@
+import * as AlertActions from '../store/actions/alerts.actions';
 import * as AuthActions from '../auth/store/actions/auth.actions';
 import { Component, OnInit } from '@angular/core';
+import { selectAlertsState } from '../store/selectors/alerts.selectors';
 import { Store } from '@ngrx/store';
 import {
   selectUser,
@@ -14,6 +16,7 @@ import {
 export class AppsComponent implements OnInit {
   isAuthenticated$ = this.store.select(selectIsAuthenticated);
   user$ = this.store.select(selectUser);
+  alerts$ = this.store.select(selectAlertsState);
 
   constructor(private store: Store) {}
 
@@ -32,5 +35,10 @@ export class AppsComponent implements OnInit {
   // TEST
   refreshToken(): void {
     this.store.dispatch(AuthActions.refreshToken());
+  }
+  addAlert(): void {
+    this.store.dispatch(
+      AlertActions.addAlert({ alert: { type: 'info', text: 'Test' } })
+    );
   }
 }

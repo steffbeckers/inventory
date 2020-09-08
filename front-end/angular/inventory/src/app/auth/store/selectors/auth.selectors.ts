@@ -5,11 +5,15 @@ export const selectAuthState = createFeatureSelector<fromAuth.State>(
   fromAuth.authFeatureKey
 );
 
+function tokenExpired(token: string): boolean {
+  const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+  return Math.floor(new Date().getTime() / 1000) >= expiry;
+}
+
 export const selectIsAuthenticated = createSelector(
   selectAuthState,
   (state) => {
-    // TODO: Check token valid?
-    return !!state.access_token;
+    return !!state.access_token && !tokenExpired(state.access_token);
   }
 );
 

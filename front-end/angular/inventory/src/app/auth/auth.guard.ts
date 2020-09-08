@@ -4,19 +4,19 @@ import { take, switchMap, first, mergeMap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { selectIsAuthenticated } from './store/selectors/auth.selectors';
+import * as AuthActions from './store/actions/auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class IsAuthenticatedAuthGuard implements CanActivate {
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store) {}
 
   canActivate(): Observable<boolean> {
     return this.store.pipe(
       select(selectIsAuthenticated),
       first(),
       switchMap((isAuthenticated) => {
-        // TODO: Move to action => effect to isolade side effects?
         if (!isAuthenticated) {
-          this.router.navigateByUrl('/auth/login');
+          this.store.dispatch(AuthActions.logout());
         }
 
         return of(isAuthenticated);

@@ -2,6 +2,7 @@ import * as AuthActions from '../store/actions/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { selectAuthState } from '../store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-auth-login',
@@ -14,6 +15,7 @@ export class AuthLoginComponent implements OnInit {
     password: [null, Validators.required],
     rememberMe: [true],
   });
+  auth$ = this.store.select(selectAuthState);
 
   constructor(private store: Store, public fb: FormBuilder) {}
 

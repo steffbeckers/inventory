@@ -1,3 +1,4 @@
+import { AlertsEffects } from './store/effects/alerts.effects';
 import { API_BASE_URL } from 'src/api/inventory.api';
 import { AppComponent } from './app.component';
 import { AppEffects } from './store/effects/app.effects';
@@ -22,11 +23,17 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
+    }),
     // TODO: Disable in production:
     // !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, AlertsEffects]),
     AuthModule,
     ClarityModule,
   ],
