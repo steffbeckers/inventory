@@ -46,10 +46,23 @@
           formControlName="rememberMe"
         />
       </clr-checkbox-wrapper>
-      <!-- TODO: Error messages -->
-      <!-- <div class="error active">
-        Invalid username or password
-      </div> -->
+      <ng-container *ngIf="auth$ | async as auth">
+        <ng-container
+          *ngIf="
+            auth.error?.error?.error_description ===
+            'invalid_username_or_password'
+          "
+        >
+          <div class="error active">
+            Invalid username or password
+          </div>
+        </ng-container>
+        <ng-container *ngIf="auth.error?.status === 0">
+          <div class="error active">
+            Can't connect to authentication server. {{ auth.error.statusText }}
+          </div>
+        </ng-container>
+      </ng-container>
       <button type="submit" class="btn btn-primary">LOGIN</button>
       <a class="signup">Sign up for a new account</a>
     </div>
