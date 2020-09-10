@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+.dark-theme {
+  @import '~@clr/ui/src/utils/theme.dark.clarity'; // Dark theme variables
+  @import '~@clr/ui/src/utils/components.clarity';
+
+  // @import third party styling...
+
+  // Fix styling HTML-tag.
+  // node_modules\@clr\ui\src\typography\_typography.clarity.scss
+  & html {
+    color: $clr-global-font-color;
+    font-family: $clr-font;
+    font-size: $clr-baseline-px;
+  }
+}

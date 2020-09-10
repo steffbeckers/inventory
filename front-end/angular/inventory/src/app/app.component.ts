@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { selectUIState } from './store/selectors/ui.selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +9,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  ui$ = this.store.select(selectUIState);
 
-  ngOnInit(): void {}
+  constructor(private store: Store, @Inject(DOCUMENT) private document: Document) {}
+
+  ngOnInit(): void {
+    this.ui$.subscribe(ui => {
+      // Theme
+      if (ui.theme === 'dark') {
+        this.document.documentElement.classList.add('dark-theme');
+      } else {
+        this.document.documentElement.classList.remove('dark-theme');
+      }
+    });
+  }
 }

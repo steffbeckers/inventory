@@ -39,8 +39,18 @@
         />
       </label>
     </form>
-    <ng-container *ngIf="(isAuthenticated$ | async) && (user$ | async) as user">
-      <div class="header-actions">
+    <div class="header-actions">
+      <div class="theme-toggler">
+        <clr-toggle-wrapper>
+          <input type="checkbox" clrToggle [(ngModel)]="lightTheme" (change)="toggleTheme()" />
+        </clr-toggle-wrapper>
+      </div>
+      <ng-container
+        *ngIf="(isAuthenticated$ | async) && (user$ | async) as user"
+      >
+        <a class="nav-link nav-icon" aria-label="settings">
+          <clr-icon shape="cog"></clr-icon>
+        </a>
         <clr-dropdown>
           <button
             class="nav-text"
@@ -57,13 +67,11 @@
             <a (click)="logout()" clrDropdownItem>Log out</a>
           </clr-dropdown-menu>
         </clr-dropdown>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="(isAuthenticated$ | async) === false">
-      <div class="header-actions">
+      </ng-container>
+      <ng-container *ngIf="(isAuthenticated$ | async) === false">
         <a routerLink="/auth/login" class="nav-link nav-text">Login</a>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </header>
   <nav class="subnav">
     <ul class="nav">

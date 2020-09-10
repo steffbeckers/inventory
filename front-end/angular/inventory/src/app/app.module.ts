@@ -1,3 +1,4 @@
+import * as fromUI from './store/reducers/ui.reducer';
 import { AlertsEffects } from './store/effects/alerts.effects';
 import { API_BASE_URL } from 'src/api/inventory.api';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { metaReducers, reducers } from './store';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
+import { UIEffects } from './store/effects/ui.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +38,8 @@ import { StoreModule } from '@ngrx/store';
     EffectsModule.forRoot([AppEffects, AlertsEffects]),
     AuthModule,
     ClarityModule,
+    StoreModule.forFeature(fromUI.uiFeatureKey, fromUI.reducer),
+    EffectsModule.forFeature([UIEffects]),
   ],
   providers: [
     {
