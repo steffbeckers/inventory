@@ -21,6 +21,6 @@ export class AppComponent implements OnInit {
       } else {
         this.document.documentElement.classList.remove('dark-theme');
       }
-    })
+    });
   }
 }

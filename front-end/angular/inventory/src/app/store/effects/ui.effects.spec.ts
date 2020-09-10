@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { UIEffects } from './ui.effects';
 
 describe('UIEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = new Observable<any>();
   let effects: UIEffects;
 
   beforeEach(() => {
