@@ -49,6 +49,9 @@ Items module (feature)
 Dev module
 `ng generate module dev --route dev --module app.module.ts`
 
+UI feature in app store
+`ng generate @ngrx/schematics:feature store/UI --module app.module.ts --group --creators --api`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.

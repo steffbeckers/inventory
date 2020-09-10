@@ -1,7 +1,9 @@
 import * as AlertActions from '../store/actions/alerts.actions';
 import * as AuthActions from '../auth/store/actions/auth.actions';
+import * as UIActions from '../store/actions/ui.actions';
 import { Component, OnInit } from '@angular/core';
 import { selectAlertsState } from '../store/selectors/alerts.selectors';
+import { selectUIState } from '../store/selectors/ui.selectors';
 import { Store } from '@ngrx/store';
 import {
   selectUser,
@@ -17,6 +19,8 @@ export class AppsComponent implements OnInit {
   isAuthenticated$ = this.store.select(selectIsAuthenticated);
   user$ = this.store.select(selectUser);
   alerts$ = this.store.select(selectAlertsState);
+  ui$ = this.store.select(selectUIState);
+  lightTheme = false;
 
   constructor(private store: Store) {}
 
@@ -26,6 +30,13 @@ export class AppsComponent implements OnInit {
         this.store.dispatch(AuthActions.loadUserInfo());
       }
     });
+    this.ui$.subscribe((ui) => {
+      this.lightTheme = ui.theme !== 'dark';
+    });
+  }
+
+  toggleTheme(): void {
+    this.store.dispatch(UIActions.toggleTheme());
   }
 
   logout(): void {

@@ -40,16 +40,10 @@
       </label>
     </form>
     <div class="header-actions">
-      <div class="clr-control-container">
-        <div class="clr-toggle-wrapper">
-          <input
-            type="checkbox"
-            id="theme-toggler"
-            name="theme-toggler"
-            class="clr-toggle"
-          />
-          <label for="theme-toggler">Dark</label>
-        </div>
+      <div class="theme-toggler">
+        <clr-toggle-wrapper>
+          <input type="checkbox" clrToggle [(ngModel)]="lightTheme" (change)="toggleTheme()" />
+        </clr-toggle-wrapper>
       </div>
       <ng-container
         *ngIf="(isAuthenticated$ | async) && (user$ | async) as user"
