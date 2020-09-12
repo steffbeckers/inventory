@@ -1,4 +1,7 @@
+import * as ItemsActions from '../store/actions/items.actions';
 import { Component, OnInit } from '@angular/core';
+import { selectItemsState } from '../store/selectors/items.selectors';
+import { Store } from '@ngrx/store';
 import {
   FormBuilder,
   FormControl,
@@ -12,9 +15,10 @@ import {
   styleUrls: ['./create-item.component.scss'],
 })
 export class ItemsCreateItemComponent implements OnInit {
+  itemsState$ = this.store.select(selectItemsState);
   itemForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.itemForm = this.fb.group({
@@ -25,15 +29,15 @@ export class ItemsCreateItemComponent implements OnInit {
     });
   }
 
-  resetForm(): void {
-    this.itemForm.reset();
-  }
-
   createItem(): void {
     if (this.itemForm.invalid) {
       return;
     }
 
-    console.log(this.itemForm.value);
+    this.store.dispatch(ItemsActions.createItem({ item: this.itemForm.value }));
+  }
+
+  resetForm(): void {
+    this.itemForm.reset();
   }
 }

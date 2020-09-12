@@ -2,6 +2,7 @@
 using Inventory.Application.Items.Queries.GetItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,22 +18,22 @@ namespace Inventory.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateItem([FromBody] CreateItemDto createItemDto)
+        public async Task<ActionResult<Guid>> CreateItem([FromBody] CreateItemDto createItemDto)
         {
             CreateItemCommand command = new CreateItemCommand()
             {
                 Name = createItemDto.Name,
                 Description = createItemDto.Description,
-                ItemTypeId = createItemDto.ItemTypeId,
                 PurchaseDate = createItemDto.PurchaseDate,
                 PurchasePrice = createItemDto.PurchasePrice,
                 ExpirationDate = createItemDto.ExpirationDate,
-                LastUsed = createItemDto.LastUsed
+                LastUsed = createItemDto.LastUsed,
+                ItemTypeId = createItemDto.ItemTypeId
             };
 
-            await Mediator.Send(command);
+            Guid itemId = await Mediator.Send(command);
 
-            return Ok();
+            return Ok(itemId);
         }
     }
 }

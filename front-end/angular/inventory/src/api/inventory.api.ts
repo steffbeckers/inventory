@@ -18,7 +18,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IItemsService {
     getItems(): Observable<ItemDto[]>;
-    createItem(createItemDto: CreateItemDto): Observable<FileResponse>;
+    createItem(createItemDto: CreateItemDto): Observable<string>;
 }
 
 @Injectable({
@@ -86,7 +86,7 @@ export class ItemsService implements IItemsService {
         return _observableOf<ItemDto[]>(<any>null);
     }
 
-    createItem(createItemDto: CreateItemDto): Observable<FileResponse> {
+    createItem(createItemDto: CreateItemDto): Observable<string> {
         let url_ = this.baseUrl + "/api/Items";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -98,7 +98,7 @@ export class ItemsService implements IItemsService {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -109,31 +109,33 @@ export class ItemsService implements IItemsService {
                 try {
                     return this.processCreateItem(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<string>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<string>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreateItem(response: HttpResponseBase): Observable<FileResponse> {
+    protected processCreateItem(response: HttpResponseBase): Observable<string> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<string>(<any>null);
     }
 }
 
@@ -820,11 +822,11 @@ export interface IItemInfoDto {
 export class CreateItemDto implements ICreateItemDto {
     name?: string | undefined;
     description?: string | undefined;
-    itemTypeId?: string;
     purchaseDate?: moment.Moment | undefined;
     purchasePrice?: number | undefined;
     expirationDate?: moment.Moment | undefined;
     lastUsed?: moment.Moment | undefined;
+    itemTypeId?: string | undefined;
 
     constructor(data?: ICreateItemDto) {
         if (data) {
@@ -839,11 +841,11 @@ export class CreateItemDto implements ICreateItemDto {
         if (_data) {
             this.name = _data["name"];
             this.description = _data["description"];
-            this.itemTypeId = _data["itemTypeId"];
             this.purchaseDate = _data["purchaseDate"] ? moment.parseZone(_data["purchaseDate"].toString()) : <any>undefined;
             this.purchasePrice = _data["purchasePrice"];
             this.expirationDate = _data["expirationDate"] ? moment.parseZone(_data["expirationDate"].toString()) : <any>undefined;
             this.lastUsed = _data["lastUsed"] ? moment.parseZone(_data["lastUsed"].toString()) : <any>undefined;
+            this.itemTypeId = _data["itemTypeId"];
         }
     }
 
@@ -858,11 +860,11 @@ export class CreateItemDto implements ICreateItemDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["description"] = this.description;
-        data["itemTypeId"] = this.itemTypeId;
         data["purchaseDate"] = this.purchaseDate ? this.purchaseDate.toISOString(true) : <any>undefined;
         data["purchasePrice"] = this.purchasePrice;
         data["expirationDate"] = this.expirationDate ? this.expirationDate.toISOString(true) : <any>undefined;
         data["lastUsed"] = this.lastUsed ? this.lastUsed.toISOString(true) : <any>undefined;
+        data["itemTypeId"] = this.itemTypeId;
         return data; 
     }
 }
@@ -870,11 +872,11 @@ export class CreateItemDto implements ICreateItemDto {
 export interface ICreateItemDto {
     name?: string | undefined;
     description?: string | undefined;
-    itemTypeId?: string;
     purchaseDate?: moment.Moment | undefined;
     purchasePrice?: number | undefined;
     expirationDate?: moment.Moment | undefined;
     lastUsed?: moment.Moment | undefined;
+    itemTypeId?: string | undefined;
 }
 
 export class CreateTodoItemCommand implements ICreateTodoItemCommand {

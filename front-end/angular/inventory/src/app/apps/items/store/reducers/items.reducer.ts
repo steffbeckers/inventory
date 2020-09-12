@@ -9,6 +9,7 @@ export interface State extends EntityState<ItemDto> {
   // additional state property
   loading: boolean;
   error: any;
+  createItemErrors: any;
 }
 
 export const adapter: EntityAdapter<ItemDto> = createEntityAdapter<ItemDto>();
@@ -17,6 +18,7 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   loading: false,
   error: null,
+  createItemErrors: null,
 });
 
 export const reducer = createReducer(
@@ -39,6 +41,26 @@ export const reducer = createReducer(
       ...state,
       loading: false,
       error,
+    };
+  }),
+  on(ItemsActions.createItem, (state) => {
+    return {
+      ...state,
+      loading: true,
+      createItemErrors: null,
+    };
+  }),
+  on(ItemsActions.createItemSuccess, (state, { item }) => {
+    return adapter.addOne(item, {
+      ...state,
+      loading: false,
+    });
+  }),
+  on(ItemsActions.createItemFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      createItemErrors: JSON.parse(error.response).errors,
     };
   })
 );

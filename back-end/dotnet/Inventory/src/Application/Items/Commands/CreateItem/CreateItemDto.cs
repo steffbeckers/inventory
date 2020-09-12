@@ -8,10 +8,11 @@ namespace Inventory.Application.Items.Commands.CreateItem
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid ItemTypeId { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public double? PurchasePrice { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? LastUsed { get; set; }
+
+        public Guid? ItemTypeId { get; set; }
     }
 }

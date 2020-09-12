@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Items.Commands.CreateItem
 {
-    public class CreateItemCommand : IRequest
+    public class CreateItemCommand : IRequest<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid ItemTypeId { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public double? PurchasePrice { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? LastUsed { get; set; }
+        
+        public Guid? ItemTypeId { get; set; }
     }
 
-    public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand>
+    public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, Guid>
     {
         private readonly IApplicationDbContext _context;
 
@@ -29,7 +30,7 @@ namespace Inventory.Application.Items.Commands.CreateItem
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateItemCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateItemCommand request, CancellationToken cancellationToken)
         {
             Item item = new Item() {
                 Name = request.Name,
@@ -51,7 +52,7 @@ namespace Inventory.Application.Items.Commands.CreateItem
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return item.Id;
         }
     }
 }

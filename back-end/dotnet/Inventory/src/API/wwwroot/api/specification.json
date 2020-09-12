@@ -54,10 +54,10 @@
           "200": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
                   "type": "string",
-                  "format": "binary"
+                  "format": "guid"
                 }
               }
             }
@@ -519,10 +519,6 @@
             "type": "string",
             "nullable": true
           },
-          "itemTypeId": {
-            "type": "string",
-            "format": "guid"
-          },
           "purchaseDate": {
             "type": "string",
             "format": "date-time",
@@ -541,6 +537,11 @@
           "lastUsed": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "itemTypeId": {
+            "type": "string",
+            "format": "guid",
             "nullable": true
           }
         }

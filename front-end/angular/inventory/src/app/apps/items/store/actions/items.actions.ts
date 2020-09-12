@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ItemDto } from 'src/api/inventory.api';
+import { CreateItemDto, ItemDto } from '../../../../../api/inventory.api';
 
 export const loadItems = createAction('[Items] Load items');
 
@@ -10,5 +10,20 @@ export const loadItemsSuccess = createAction(
 
 export const loadItemsFailure = createAction(
   '[Items] Load items Failure',
+  props<{ error: any }>()
+);
+
+export const createItem = createAction(
+  '[Items] Create item',
+  props<{ item: CreateItemDto }>()
+);
+
+export const createItemSuccess = createAction(
+  '[Items] Create item Success',
+  props<{ item: ItemDto }>()
+);
+
+export const createItemFailure = createAction(
+  '[Items] Create item Failure',
   props<{ error: any }>()
 );

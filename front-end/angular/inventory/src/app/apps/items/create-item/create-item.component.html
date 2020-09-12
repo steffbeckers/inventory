@@ -1,19 +1,37 @@
-<h3>Create new item</h3>
-<form
-  [formGroup]="itemForm"
-  (ngSubmit)="createItem()"
-  clrForm
-  clrLayout="vertical"
->
-  <clr-input-container>
-    <label>Name</label>
-    <input formControlName="name" clrInput type="text" name="name" />
-    <clr-control-error
-      >Name is required and must not exceed 200 characters.</clr-control-error
+<ng-container *ngIf="itemsState$ | async as itemsState">
+  <h3>Create new item</h3>
+  <form
+    [formGroup]="itemForm"
+    (ngSubmit)="createItem(); $event.preventDefault()"
+    clrForm
+  >
+    <clr-input-container>
+      <label>Name</label>
+      <input formControlName="name" clrInput type="text" name="name" />
+      <clr-control-error
+        >Name is required and must not exceed 200 characters.</clr-control-error
+      >
+    </clr-input-container>
+    <clr-alert
+      *ngIf="itemsState.createItemErrors?.Name"
+      clrAlertType="danger"
+      [clrAlertSizeSmall]="true"
     >
-  </clr-input-container>
-  <button class="btn btn-primary" type="submit" (click)="createItem()">
-    Create
-  </button>
-  <button class="btn" type="button" (click)="resetForm()">Reset</button>
-</form>
+      <clr-alert-item *ngFor="let error of itemsState.createItemErrors?.Name">
+        <span class="alert-text">
+          {{ error }}
+        </span>
+      </clr-alert-item>
+    </clr-alert>
+    <clr-textarea-container>
+      <label>Description</label>
+      <textarea
+        clrTextarea
+        formControlName="description"
+        name="description"
+      ></textarea>
+    </clr-textarea-container>
+    <button class="btn btn-primary" type="submit">Create</button>
+    <button class="btn" type="button" (click)="resetForm()">Reset</button>
+  </form>
+</ng-container>

@@ -25,6 +25,7 @@
           clrInput
           placeholder="E-mail or username"
           formControlName="emailOrUsername"
+          autocomplete="email"
         />
       </clr-input-container>
       <clr-password-container>
@@ -35,6 +36,7 @@
           clrPassword
           placeholder="Password"
           formControlName="password"
+          autocomplete="current-password"
         />
       </clr-password-container>
       <clr-checkbox-wrapper>
@@ -53,9 +55,7 @@
             'invalid_username_or_password'
           "
         >
-          <div class="error active">
-            Invalid username or password
-          </div>
+          <div class="error active">Invalid username or password</div>
         </ng-container>
         <ng-container *ngIf="auth.error?.status === 0">
           <div class="error active">
