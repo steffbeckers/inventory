@@ -4,7 +4,6 @@ import { API_BASE_URL } from 'src/api/inventory.api';
 import { AppComponent } from './app.component';
 import { AppEffects } from './store/effects/app.effects';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ClarityModule } from '@clr/angular';
@@ -36,7 +35,6 @@ import { UIEffects } from './store/effects/ui.effects';
     // !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([AppEffects, AlertsEffects]),
-    AuthModule,
     ClarityModule,
     StoreModule.forFeature(fromUI.uiFeatureKey, fromUI.reducer),
     EffectsModule.forFeature([UIEffects]),

@@ -42,35 +42,34 @@
     <div class="header-actions">
       <div class="theme-toggler">
         <clr-toggle-wrapper>
-          <input type="checkbox" clrToggle [(ngModel)]="lightTheme" (change)="toggleTheme()" />
+          <input
+            type="checkbox"
+            clrToggle
+            [(ngModel)]="lightTheme"
+            (change)="toggleTheme()"
+          />
         </clr-toggle-wrapper>
       </div>
-      <ng-container
-        *ngIf="(isAuthenticated$ | async) && (user$ | async) as user"
-      >
-        <a class="nav-link nav-icon" aria-label="settings">
-          <clr-icon shape="cog"></clr-icon>
-        </a>
-        <clr-dropdown>
-          <button
-            class="nav-text"
-            clrDropdownTrigger
-            aria-label="open user profile"
-          >
-            <span class="username">{{ user.username }}</span>
-            <clr-icon shape="caret down"></clr-icon>
-          </button>
-          <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-            <a clrDropdownItem>Preferences</a>
-            <a (click)="refreshToken()" clrDropdownItem>TEST Refresh token</a>
-            <a (click)="addAlert()" clrDropdownItem>TEST Add app alert</a>
-            <a (click)="logout()" clrDropdownItem>Log out</a>
-          </clr-dropdown-menu>
-        </clr-dropdown>
-      </ng-container>
-      <ng-container *ngIf="(isAuthenticated$ | async) === false">
-        <a routerLink="/auth/login" class="nav-link nav-text">Login</a>
-      </ng-container>
+      <a class="nav-link nav-icon" aria-label="settings">
+        <clr-icon shape="cog"></clr-icon>
+      </a>
+      <!-- <ng-container *ngIf="isAuthenticated$ | async"> -->
+      <clr-dropdown>
+        <button
+          class="nav-text"
+          clrDropdownTrigger
+          aria-label="open user profile"
+        >
+          <span class="username">Username</span>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a clrDropdownItem>Preferences</a>
+          <!-- <a (click)="addAlert()" clrDropdownItem>TEST Add app alert</a> -->
+          <a clrDropdownItem>Log out</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+      <!-- </ng-container> -->
     </div>
   </header>
   <nav class="subnav">
