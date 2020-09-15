@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { selectAlertsState } from '../store/selectors/alerts.selectors';
 import { selectUIState } from '../store/selectors/ui.selectors';
 import { Store } from '@ngrx/store';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-apps',
@@ -15,12 +16,24 @@ export class AppsComponent implements OnInit {
   ui$ = this.store.select(selectUIState);
   lightTheme = false;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, public authService: OidcSecurityService) {}
 
   ngOnInit(): void {
+    this.authService
+      .checkAuth()
+      .subscribe((auth) => console.log('is authenticated', auth));
+
     this.ui$.subscribe((ui) => {
       this.lightTheme = ui.theme !== 'dark';
     });
+  }
+
+  login(): void {
+    this.authService.authorize();
+  }
+
+  logout(): void {
+    this.authService.logoff();
   }
 
   toggleTheme(): void {
