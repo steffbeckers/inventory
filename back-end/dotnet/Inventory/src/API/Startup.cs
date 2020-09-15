@@ -41,7 +41,9 @@ namespace Inventory.API
 
             services.AddCors();
 
-            services.AddControllers(options => options.Filters.Add(new ApiExceptionFilter()));
+            services.AddControllersWithViews(options => options.Filters.Add(new ApiExceptionFilter()));
+
+            services.AddRazorPages();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
@@ -70,6 +72,7 @@ namespace Inventory.API
             }
             else
             {
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
@@ -102,6 +105,10 @@ namespace Inventory.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
