@@ -29,6 +29,51 @@ namespace Inventory.Infrastructure
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+                    options.Clients.Add(new Client()
+                    {
+                        ClientId = "angular",
+                        ClientName = "Angular app",
+                        RequireClientSecret = false,
+
+                        AllowedGrantTypes = GrantTypes.Code,
+                        RequirePkce = true,
+
+                        RedirectUris = { "http://localhost:4200" },
+                        PostLogoutRedirectUris = { "http://localhost:4200" },
+                        AllowedCorsOrigins = { "http://localhost:4200" },
+
+                        AllowedScopes = new List<string>() {
+                            IdentityServerConstants.StandardScopes.OpenId,
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "Inventory.APIAPI"
+                        },
+
+                        AllowAccessTokensViaBrowser = true,
+                        RequireConsent = false,
+                    });
+
+                    //options.Clients.Add(new Client()
+                    //{
+                    //    ClientId = "angular",
+                    //    ClientName = "Angular app",
+                    //    RequireClientSecret = false,
+                    //    AllowedGrantTypes = GrantTypes.Implicit,
+                    //    AllowAccessTokensViaBrowser = true,
+                    //    AllowOfflineAccess = true,
+                    //    AccessTokenType = AccessTokenType.Jwt,
+                    //    // TODO
+                    //    // AccessTokenLifetime = 10,
+                    //    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    //    AllowedScopes = new List<string>() {
+                    //        IdentityServerConstants.StandardScopes.OpenId,
+                    //        IdentityServerConstants.StandardScopes.Profile,
+                    //        "Inventory.APIAPI"
+                    //    },
+                    //    // TODO: Configurable
+                    //    AllowedCorsOrigins = new List<string>() { "http://localhost:4200" },
+                    //    RedirectUris = new List<string>() { "http://localhost:4200/auth/oidc-callback" }
+                    //});
+
                     //options.Clients.AddSPA("angular", options =>
                     //{
                     //    options.WithRedirectUri("http://localhost:4200/auth/oidc-callback");
@@ -36,30 +81,10 @@ namespace Inventory.Infrastructure
                     //    options.WithoutClientSecrets();
                     //    options.WithScopes(
                     //        IdentityServerConstants.StandardScopes.OpenId,
-                    //        IdentityServerConstants.StandardScopes.Profile
+                    //        IdentityServerConstants.StandardScopes.Profile,
+                    //        "Inventory.APIAPI"
                     //    );
                     //});
-                    options.Clients.Add(new Client()
-                    {
-                        ClientId = "angular",
-                        ClientName = "Angular app",
-                        RequireClientSecret = false,
-                        AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                        AllowAccessTokensViaBrowser = true,
-                        AllowOfflineAccess = true,
-                        AccessTokenType = AccessTokenType.Jwt,
-                        // TODO
-                        // AccessTokenLifetime = 10,
-                        RefreshTokenUsage = TokenUsage.OneTimeOnly,
-                        AllowedScopes = new List<string>() {
-                            IdentityServerConstants.StandardScopes.OpenId,
-                            IdentityServerConstants.StandardScopes.Profile,
-                            "Inventory.APIAPI"
-                        },
-                        // TODO: Configurable
-                        AllowedCorsOrigins = new List<string>() { "http://localhost:4200" },
-                        RedirectUris = new List<string>() { "http://localhost:4200/auth/oidc-callback" }
-                    });
                 });
 
             services.AddTransient<IDateTime, DateTimeService>();
