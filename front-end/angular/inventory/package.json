@@ -31,6 +31,7 @@
     "@ngrx/store": "^10.0.0",
     "@ngrx/store-devtools": "^10.0.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "angular-auth-oidc-client": "^11.2.0",
     "moment": "^2.27.0",
     "ngrx-store-localstorage": "^9.0.0",
     "oidc-client": "^1.10.1",
