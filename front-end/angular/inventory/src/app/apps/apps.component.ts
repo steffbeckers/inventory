@@ -19,30 +19,23 @@ export class AppsComponent implements OnInit {
   constructor(private store: Store, public authService: OidcSecurityService) {}
 
   ngOnInit(): void {
-    this.authService
-      .checkAuth()
-      .subscribe((auth) => console.log('is authenticated', auth));
-
     this.ui$.subscribe((ui) => {
       this.lightTheme = ui.theme !== 'dark';
     });
-  }
-
-  login(): void {
-    this.authService.authorize();
-  }
-
-  logout(): void {
-    this.authService.logoff();
   }
 
   toggleTheme(): void {
     this.store.dispatch(UIActions.toggleTheme());
   }
 
-  addAlert(): void {
-    this.store.dispatch(
-      AlertActions.addAlert({ alert: { type: 'info', text: 'Test' } })
-    );
+  logout(): void {
+    this.authService.logoff();
   }
+
+  // TEST
+  // addAlert(): void {
+  //   this.store.dispatch(
+  //     AlertActions.addAlert({ alert: { type: 'info', text: 'Test' } })
+  //   );
+  // }
 }

@@ -27,11 +27,19 @@ namespace Inventory.Infrastructure
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "Inventory.Cookie";
+                // TODO
+                // options.LoginPath = "/Auth/Login";
+                // options.LogoutPath = "/Auth/Logout";
+            });
+
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
                     options.Clients.Add(new Client()
                     {
-                        ClientId = "angular",
+                        ClientId = "inventory-angular",
                         ClientName = "Angular app",
                         RequireClientSecret = false,
 

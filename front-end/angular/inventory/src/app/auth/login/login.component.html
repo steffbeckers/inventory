@@ -1,0 +1,54 @@
+<div class="login-wrapper">
+  <!-- <form
+    class="login"
+    [formGroup]="loginForm"
+    (ngSubmit)="loginWithPassword(); $event.preventDefault()"
+  > -->
+  <form class="login" (ngSubmit)="$event.preventDefault()">
+    <section class="title">
+      <h3 class="welcome">Welcome to the</h3>
+      Inventory app
+      <!-- <h5 class="hint">Use your Company ID to sign in or create one now</h5> -->
+      <!-- TODO: Remove -->
+      <!-- <h5 class="hint">
+        <a (click)="demoLoginAdminCredentials()">Demo login as admin</a>
+      </h5> -->
+    </section>
+    <div class="login-group">
+      <!-- <clr-select-container>
+        <label class="clr-sr-only">User Role</label>
+        <select clrSelect name="type" [(ngModel)]="form.type">
+          <option value="local">Local Users</option>
+          <option value="admin">Administrator</option>
+        </select>
+      </clr-select-container> -->
+      <!-- <clr-input-container>
+        <label class="clr-sr-only">E-mail or username</label>
+        <input
+          type="text"
+          name="emailOrUsername"
+          clrInput
+          placeholder="E-mail or username"
+          formControlName="emailOrUsername"
+          autocomplete="email"
+        />
+      </clr-input-container>
+      <clr-password-container>
+        <label class="clr-sr-only">Password</label>
+        <input
+          type="password"
+          name="password"
+          clrPassword
+          placeholder="Password"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+      </clr-password-container>
+      <button type="submit" class="btn btn-primary">LOGIN</button>
+      <a class="signup">Sign up for a new account</a> -->
+      <button (click)="loginWithSSO()" type="button" class="btn btn-primary">
+        LOGIN
+      </button>
+    </div>
+  </form>
+</div>

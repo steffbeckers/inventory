@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { selectUIState } from './store/selectors/ui.selectors';
 import { Store } from '@ngrx/store';
 
@@ -11,10 +12,20 @@ import { Store } from '@ngrx/store';
 export class AppComponent implements OnInit {
   ui$ = this.store.select(selectUIState);
 
-  constructor(private store: Store, @Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    private store: Store,
+    private authService: OidcSecurityService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit(): void {
-    this.ui$.subscribe(ui => {
+    this.authService
+      .checkAuth()
+      .subscribe((auth) =>
+        console.log('AppComponent => this.authService.checkAuth()', auth)
+      );
+
+    this.ui$.subscribe((ui) => {
       // Theme
       if (ui.theme === 'dark') {
         this.document.documentElement.classList.add('dark-theme');

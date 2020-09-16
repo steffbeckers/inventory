@@ -4,12 +4,16 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppEffects } from './store/effects/app.effects';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthComponent } from './auth/auth.component';
+import { AuthLoginComponent } from './auth/login/login.component';
+import { AuthOidcCallbackComponent } from './auth/oidc-callback/oidc-callback.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ClarityModule } from '@clr/angular';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from 'src/environments/environment';
 import { ErrorInterceptor } from 'src/app/shared/interceptors/error.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { metaReducers, reducers } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -19,6 +23,7 @@ import {
   LogLevel,
   OidcConfigService,
 } from 'angular-auth-oidc-client';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 
 export function configureAuth(oidcConfigService: OidcConfigService): any {
   return () =>
@@ -26,23 +31,30 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
       stsServer: environment.api_base_url,
       redirectUrl: window.location.origin,
       postLogoutRedirectUri: window.location.origin,
-      clientId: 'angular',
+      clientId: 'inventory-angular',
       scope: 'openid profile Inventory.APIAPI',
       responseType: 'code',
       silentRenew: true,
       silentRenewUrl: `${window.location.origin}/silent-renew.html`,
-      logLevel: LogLevel.Debug,
+      logLevel: LogLevel.Warn,
     });
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    AuthComponent,
+    AuthLoginComponent,
+    AuthOidcCallbackComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule.forRoot(),
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -71,6 +83,11 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true,
     },
   ],
